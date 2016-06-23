@@ -1,0 +1,73 @@
+[{
+	text : '领先行业50',
+	leaf : true,
+	iconCls:'main-user-icon'
+},{
+	text : '领先行业100',
+	leaf : true,
+	iconCls:'main-user-icon'
+},{
+	text : '领先行业150',
+	leaf : true,
+	iconCls:'main-user-icon'
+},{
+	text : '领先行业200',
+	leaf : true,
+	iconCls:'main-user-icon'
+},{
+	text : '领先板块20',
+	leaf : true,
+	iconCls:'main-user-icon'
+},{
+	text : '领先板块50',
+	leaf : true,
+	iconCls:'main-user-icon'
+},{
+	text : '领先板块80',
+	leaf : true,
+	iconCls:'main-user-icon'
+},{
+	text : '领先板块100',
+	leaf : true,
+	iconCls:'main-user-icon'
+},{
+	text : '流通盘20',
+	leaf : true,
+	iconCls:'main-user-icon'
+},{
+	text : '流通盘50',
+	leaf : true,
+	iconCls:'main-user-icon'
+},{
+	text : '流通盘80',
+	leaf : true,
+	iconCls:'main-user-icon'
+},{
+	text : '流通盘100',
+	leaf : true,
+	iconCls:'main-user-icon'
+},{
+	text : '涨跌幅分布',
+	leaf : true,
+	iconCls:'main-user-icon'
+},{
+	text : '盈亏图表',
+	leaf : true,
+	iconCls:'main-user-icon'
+},{
+	text : '资金图表',
+	leaf : true,
+	iconCls:'main-user-icon'
+},{
+	text : '跑赢大盘图表',
+	leaf : true,
+	iconCls:'main-user-icon'
+},{
+	text : '持仓图表',
+	leaf : true,
+	iconCls:'main-user-icon'
+},{
+	text : '年图表',
+	leaf : true,
+	iconCls:'main-user-icon'
+}]

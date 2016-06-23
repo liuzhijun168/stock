@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp"
+	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<display-name>stock</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+
+	<servlet>
+		<servlet-name>ChartRenderServlet</servlet-name>
+		<servlet-class>org.crabdave.chartdemo.ChartRenderServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChartRenderServlet</servlet-name>
+		<url-pattern>/ChartRenderServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>ReportServlet</display-name>
+		<servlet-name>ReportServlet</servlet-name>
+		<servlet-class>com.lzj.ReportServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ReportServlet</servlet-name>
+		<url-pattern>/ReportServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>ChartServlet</display-name>
+		<servlet-name>ChartServlet</servlet-name>
+		<servlet-class>com.lzj.ChartServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChartServlet</servlet-name>
+		<url-pattern>/ChartServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description></description>
+		<display-name>ChartLineServlet</display-name>
+		<servlet-name>ChartLineServlet</servlet-name>
+		<servlet-class>com.lzj.ChartLineServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChartLineServlet</servlet-name>
+		<url-pattern>/ChartLineServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ChartLineCmpServlet</servlet-name>
+		<servlet-class>com.lzj.ChartLineCmpServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChartLineCmpServlet</servlet-name>
+		<url-pattern>/ChartLineCmpServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ChartLineDayServlet</servlet-name>
+		<servlet-class>com.lzj.ChartLineDayServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChartLineDayServlet</servlet-name>
+		<url-pattern>/ChartLineDayServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ChartLineSglDayServlet</servlet-name>
+		<servlet-class>com.lzj.ChartLineSglDayServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChartLineSglDayServlet</servlet-name>
+		<url-pattern>/ChartLineSglDayServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ZongZiChanServlet</servlet-name>
+		<servlet-class>com.lzj.ZongZiChanServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ZongZiChanServlet</servlet-name>
+		<url-pattern>/ZongZiChanServlet</url-pattern>
+	</servlet-mapping>
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<el-ignored>false</el-ignored>
+		</jsp-property-group>
+	</jsp-config>
+	<servlet>
+		<description></description>
+		<display-name>InitServlet</display-name>
+		<servlet-name>InitServlet</servlet-name>
+		<servlet-class>com.lzj.InitServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<description></description>
+		<display-name>HangYeLongHuBanServlet</display-name>
+		<servlet-name>HangYeLongHuBanServlet</servlet-name>
+		<servlet-class>com.lzj.HangYeLongHuBanServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HangYeLongHuBanServlet</servlet-name>
+		<url-pattern>/HangYeLongHuBanServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>RongQuanServlet</display-name>
+		<servlet-name>RongQuanServlet</servlet-name>
+		<servlet-class>com.lzj.RongQuanServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RongQuanServlet</servlet-name>
+		<url-pattern>/RongQuanServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>HangYeZiJinChuRuServlet</display-name>
+		<servlet-name>HangYeZiJinChuRuServlet</servlet-name>
+		<servlet-class>com.lzj.HangYeZiJinChuRuServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HangYeZiJinChuRuServlet</servlet-name>
+		<url-pattern>/HangYeZiJinChuRuServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>BanKuaiLongHuBanServlet</display-name>
+		<servlet-name>BanKuaiLongHuBanServlet</servlet-name>
+		<servlet-class>com.lzj.BanKuaiLongHuBanServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BanKuaiLongHuBanServlet</servlet-name>
+		<url-pattern>/BanKuaiLongHuBanServlet</url-pattern>
+	</servlet-mapping>
+
+	<!--configure the setting of springmvcDispatcherServlet and configure the 
+		mapping -->
+	<servlet>
+		<servlet-name>springmvc</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:springmvc-servlet.xml</param-value>
+		</init-param>
+		<!-- <load-on-startup>1</load-on-startup> -->
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>springmvc</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+</web-app>

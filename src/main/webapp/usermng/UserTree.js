@@ -1,0 +1,52 @@
+Ext.namespace("com.test.cmp");
+com.test.cmp.UserTree=Ext.extend(Ext.tree.TreePanel,{
+	title:'表报',
+	root:{
+		id:'rootNode',
+		text:'报表',
+		expanded:true,
+		leaf:false
+	},
+	rootVisible:true,
+	dataUrl:'usermng/userTree.json',
+	listeners:{
+		"load":function(){
+			this.expandAll();
+		}
+	},
+	initComponent:function(config){
+		this.bbar=[
+			'->',
+			{
+				text:"全部折叠", 
+				listeners:{
+					"click":{
+						fn:function(){
+							this.collapseAll();
+						},
+						scope:this
+					}	
+				}
+			},
+			{
+				text:"全部展开",
+				listeners:{
+					"click":{
+						fn:function(){
+							this.expandAll();
+						},
+						scope:this
+					}	
+				}
+			},
+			{text:"新增"},
+			{text:"删除"},
+			{text:"刷新"}
+		],
+		com.test.cmp.UserTree.superclass.initComponent.call(this);
+	},
+	dataLoadHandler:function(){
+		this.expandAll();
+	}
+});
+Ext.reg("usertree",com.test.cmp.UserTree)

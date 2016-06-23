@@ -1,0 +1,21 @@
+Ext.namespace("com.test.cmp");
+com.test.cmp.ProductMngPanel=Ext.extend(Ext.Panel,{
+	border:false,
+	layout:'border',
+	initComponent: function(config){
+		this.items=[
+			{
+				xtype:'producttree',
+				region:'west',
+				width:220,
+				split:true
+			},
+			{
+				xtype:'panel',
+				region:'center'
+			}
+		];
+		com.test.cmp.ProductMngPanel.superclass.initComponent.call(this);   
+	}
+});
+Ext.reg("productmngpanel",com.test.cmp.ProductMngPanel);

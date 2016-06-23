@@ -1,0 +1,27 @@
+{  
+    'metaData':  
+        {  
+            'root':'records',   //这个record和下面那个record保持一致，名字可以随便取  
+            'fields':[  
+                {'name':'name','type':'string'},  
+                {'name':'views','type':'string'},  
+                {'name':'visits','type':'string'}  
+            ]  
+        },  
+    'series':  
+        [  
+            {'type': 'line',displayName: 'Good',yField: 'views'},  
+            {'type': 'line',displayName: 'Good',yField: 'visits'}  
+        ],  
+    'records':  //对应上面的record  
+        [  
+            {name:'Jul 07', visits: 245000, views: 300000},  
+            {name:'Aug 07', visits: 240000, views: 350000},  
+            {name:'Sep 07', visits: 355000, views: 400000},  
+            {name:'Oct 07', visits: 375000, views: 420000},  
+            {name:'Nov 07', visits: 490000, views: 450000},  
+            {name:'Dec 07', visits: 495000, views: 580000},  
+            {name:'Jan 08', visits: 520000, views: 600000},  
+            {name:'Feb 08', visits: 620000, views: 750000}  
+        ]  
+}
