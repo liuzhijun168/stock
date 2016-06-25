@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class InitServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private List<String> stockCodeList = null;
 
 	// private String currentDate = new
 	// SimpleDateFormat("yyyy-MM-dd").format(new Date());
@@ -21,7 +20,6 @@ public class InitServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		stockCodeList = DataTools.getStockCodeList();
 		Thread thread =  new Thread(new Runnable() {
 			public void run() {
 				DataTools.loadLastestData();

@@ -27,13 +27,20 @@ public class DBTools {
 
 	public static Connection getConn() {
 		if(connection != null){
+			try {
+				if(connection.isClosed()){
+					connection = null;
+					return getConn();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 			return connection;
 		}
 		try {
 			PropsUtil propsUtil = new PropsUtil();
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			String url = propsUtil.get(DB_RUL);
-			System.out.println(url);
 			connection = DriverManager.getConnection(url);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,5 +1,7 @@
 package stock.stock;
 
+import com.lzj.DataTools;
+
 /**
  * Hello world!
  *
@@ -8,6 +10,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+    	 DataTools.loadLastestData();
+        System.out.println( );
     }
 }

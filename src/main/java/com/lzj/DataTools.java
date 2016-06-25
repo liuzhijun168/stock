@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.sql.PreparedStatement;
@@ -14,19 +13,16 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.lzj.util.HttpUtil;
+import com.lzj.util.StockUtil;
 
 public class DataTools {
 
@@ -41,8 +37,9 @@ public class DataTools {
 		Statement statement = DBTools.getStatement();
 		List<String> stockCodeList = new ArrayList<String>();
 		try {
-			ResultSet resultSet = statement.executeQuery("select b from stock_data_day group by b");
-			//ResultSet resultSet = statement.executeQuery("select b from stock_data_query group by b order by create_date ");
+			ResultSet resultSet = statement.executeQuery("select b from stock_data_query group by b");
+			// ResultSet resultSet = statement.executeQuery("select b from
+			// stock_data_query group by b order by create_date ");
 			while (resultSet.next()) {
 				stockCodeList.add(resultSet.getString(1));
 			}
@@ -67,7 +64,7 @@ public class DataTools {
 		return provinceCodeList;
 
 	}
-	
+
 	public static double getBenjin() {
 		return Double.parseDouble(DBTools.getString("select sum(balance) from balance"));
 	}
@@ -76,105 +73,109 @@ public class DataTools {
 
 		String stockCode = null;
 		HttpResponse response = null;
-		PreparedStatement pstmt = null;
-
-		String sysParam = DBTools.getString("select s_value from system_param where s_key='get_net_stock_data'");
-		while ("1".equals(sysParam)) {
+	
+		
+		//String sysParam = DBTools.getString("select s_value from system_param where s_key='get_net_stock_data'");
+		//while ("1".equals(sysParam)) {
 			try {
 				List<String> stockCodeList = getStockCodeList();
+				Collections.shuffle(stockCodeList);
+				StringBuffer stockStringBuffer = new StringBuffer();
 				for (int i = 0; i < stockCodeList.size(); i++) {
-					String code = stockCodeList.get(i);
 					stockCode = stockCodeList.get(i);
-					if (stockCode.startsWith("6")) {
-						stockCode = "sh" + stockCode;
+
+					String fullStockCode = StockUtil.getFullStockCode(stockCode);
+					if (i % 599 == 0 || (i == stockCodeList.size() - 1)) {
+						stockStringBuffer.append(fullStockCode);
+						try {
+							String stockString = stockStringBuffer.toString();
+							stockStringBuffer = new StringBuffer();
+							String url = "http://hq.sinajs.cn/list=" + stockString;
+							String str = HttpUtil.getJsonContent(url);
+							//System.out.println(url);
+							String[] stockDataArr = str.split("\\n");
+							for (String stockData : stockDataArr) {
+								//System.out.println(stockData);
+								int index = str.indexOf("=");
+								String stockDataCode = null;
+								try{
+								    stockDataCode = stockData.substring(index-6,index);
+								}catch(Exception e){
+									System.out.println(url+"@"+stockData);
+									continue;
+								}
+								stockData = stockData.substring(index+2, stockData.length()-2);
+								if (StringUtils.isEmpty(stockData) || StringUtils.isEmpty(stockData.trim())) {
+									continue;
+								}
+								insert(stockDataCode, stockData);
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+
 					} else {
-						stockCode = "sz" + stockCode;
-					}
-
-					/*
-					 * if (entity != null) { System.out.println(
-					 * "Response content length: " + entity.getContentLength());
-					 * }
-					 */
-					// char a = '10';
-					/*
-					 * 0：”大秦铁路”，股票名字； 1：”27.55″，今日开盘价； 2：”27.25″，昨日收盘价；
-					 * 3：”26.91″，当前价格； 4：”27.55″，今日最高价； 5：”26.20″，今日最低价；
-					 * 6：”26.91″，竞买价，即“买一”报价； 7：”26.92″，竞卖价，即“卖一”报价；
-					 * 8：”22114263″，成交的股票数，由于股票交易以一百股为基本单位，所以在使用时，通常把该值除以一百；
-					 * 9：”589824680
-					 * ″，成交金额，单位为“元”，为了一目了然，通常以“万元”为成交金额的单位，所以通常把该值除以一万；
-					 * 10：”4695″，“买一”申请4695股，即47手； 11：”26.91″，“买一”报价；
-					 * 12：”57590″，“买二” 13：”26.90″，“买二” 14：”14700″，“买三”
-					 * 15：”26.89″，“买三” 16：”14300″，“买四” 17：”26.88″，“买四”
-					 * 18：”15100″，“买五” 19：”26.87″，“买五”
-					 * 20：”3100″，“卖一”申报3100股，即31手； 21：”26.92″，“卖一”报价 (22, 23),
-					 * (24, 25), (26,27), (28, 29)分别为“卖二”至“卖四的情况”
-					 * 30：”2008-01-11″，日期； 31：”15:05:32″，时间；
-					 */
-					try {
-						String str = HttpUtil.getJsonContent("http://hq.sinajs.cn/list=" + stockCode)
-								.replace("var hq_str_" + stockCode + "=", "").replace("\"", "").replace(";", "");
-						if (StringUtils.isEmpty(str) || StringUtils.isEmpty(str.trim())) {
-							continue;
-						}
-						String[] arrStr = str.split(",");
-						// int mai1 = Integer.parseInt(arrStr[10]) / 100;
-						String b = code;
-						String c = arrStr[0];
-						// 九 芝
-						// 堂,18.08,18.20,17.36,18.17,17.20,17.36,17.38,6928131,122246489.05,46400,17.36,23200,17.35,4182,17.34,13000,17.32,3500,17.31,13390,17.38,4600,17.39,10000,17.40,19200,17.41,21200,17.42,2014-12-29,15:05:55,00
-
-						String r = arrStr[1];
-						float s = Float.parseFloat(arrStr[2]);
-						String d = arrStr[3];
-						String p = arrStr[4];
-						String q = arrStr[5];
-						String o = arrStr[8];
-						String m = arrStr[9];
-						// e涨幅
-						String e = String.format("%.2f", (Float.parseFloat(d) - s) * 100 / s);
-						if ("Infinity".equals(e)) {
-							e = "-99.99";
-						}
-
-						String sql = null;
-						if ("-99.99".equals(
-								DBTools.getString("select b from stock_data_query where b='" + code + "'"))) {
-							sql = " INSERT INTO stock_data_query (c,r,p,q,d,o,m,s,e,create_date,b) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-						} else {
-							sql = " update stock_data_query set c=?,r=?,p=?,q=?,d=?,o=?,m=?,s=?,e=?,create_date=? where b=?";
-						}
-
-						pstmt = DBTools.getConn().prepareStatement(sql);
-
-						pstmt.setObject(1, c);
-						pstmt.setObject(2, r);
-						pstmt.setObject(3, p);
-						pstmt.setObject(4, q);
-						pstmt.setObject(5, d);
-						pstmt.setObject(6, o);
-						pstmt.setObject(7, m);
-						pstmt.setObject(8, s);
-						pstmt.setObject(9, e);
-						pstmt.setObject(10, arrStr[30] + " " + arrStr[31]);
-						pstmt.setObject(11, b);
-						pstmt.executeUpdate();
-					} catch (Exception e) {
-						e.printStackTrace();
+						stockStringBuffer.append(fullStockCode).append(",");
 					}
 
 				}
 				Thread.sleep(150);// 10分钟一个轮回
-				sysParam = DBTools.getString("select s_value from system_param where s_key='get_net_stock_data'");
+				//sysParam = DBTools.getString("select s_value from system_param where s_key='get_net_stock_data'");
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
-		}
+		//}
 	}
 
+	private static void insert(String stockCode,String stockDataDetail){
+		try{
+			PreparedStatement pstmt = null;
+			//System.out.println(stockDataCode+"@"+str);
+			String[] arrStr = stockDataDetail.split(",");
+			// int mai1 = Integer.parseInt(arrStr[10]) / 100;
+			String b = stockCode;
+			String c = arrStr[0];
+			String r = arrStr[1];
+			float s = Float.parseFloat(arrStr[2]);
+			String d = arrStr[3];
+			String p = arrStr[4];
+			String q = arrStr[5];
+			String o = arrStr[8];
+			String m = arrStr[9];
+			// e涨幅
+			String e = String.format("%.2f", (Float.parseFloat(d) - s) * 100 / s);
+			if ("Infinity".equals(e)) {
+				e = "-99.99";
+			}
+	
+			String sql = null;
+			if ("-99.99".equals(
+					DBTools.getString("select b from stock_data_query where b='" + b + "'"))) {
+				sql = " INSERT INTO stock_data_query (c,r,p,q,d,o,m,s,e,create_date,b) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+			} else {
+				sql = " update stock_data_query set c=?,r=?,p=?,q=?,d=?,o=?,m=?,s=?,e=?,create_date=? where b=?";
+			}
+			pstmt = DBTools.getConn().prepareStatement(sql);
+	
+			pstmt.setObject(1, c);
+			pstmt.setObject(2, r);
+			pstmt.setObject(3, p);
+			pstmt.setObject(4, q);
+			pstmt.setObject(5, d);
+			pstmt.setObject(6, o);
+			pstmt.setObject(7, m);
+			pstmt.setObject(8, s);
+			pstmt.setObject(9, e);
+			pstmt.setObject(10, arrStr[30] + " " + arrStr[31]);
+			pstmt.setObject(11, b);
+			pstmt.executeUpdate();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
 	public static List<String> getHongSanBing() {
 		List<String> hongsanbingList = new ArrayList<String>();
 		List<String> strList = DataTools.getStockCodeList();
@@ -685,7 +686,7 @@ public class DataTools {
 					+ "-01 00:00:00' and '" + y + "-" + m + "-" + d + " 23:59:59' order by create_date desc  limit 0,1";
 			double preBalance = Double.parseDouble(DBTools.getString(first));
 			double lastDbl = Double.parseDouble(DBTools.getString(last));
-			if(preBalance == -99.99){
+			if (preBalance == -99.99) {
 				preBalance = getBenjin();
 			}
 			report.setFudongkuiyin_m(lastDbl - preBalance);
