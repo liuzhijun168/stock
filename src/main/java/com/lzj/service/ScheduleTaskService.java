@@ -5,5 +5,5 @@ package com.lzj.service;
 */
 public interface ScheduleTaskService {
 
-	void execute();
+	public void execute();
 }
