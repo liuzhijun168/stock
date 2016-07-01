@@ -12,7 +12,7 @@
            http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
     
     <!-- 启动扫描所有的controller -->
-    <context:component-scan base-package="com.aokunsang.web"/>
+    <context:component-scan base-package="com.lzj.control"/>
     
     <!--  主要作用于@Controller，激活该模式
         

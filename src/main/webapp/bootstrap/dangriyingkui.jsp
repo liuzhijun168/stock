@@ -94,6 +94,7 @@
 						<div class="box-header" data-original-title>
 							<h2>
 								<i id="addData">添加数据</i><span class="break"></span>
+								<i id="addZiJinData">资金变更</i><span class="break"></span>
 							</h2>
 						</div>
 					</div>
@@ -156,7 +157,8 @@
 									<td><%=DataTools.setColor(2, report.getFudongkuiyinbili_y())%></td>
 									<td><%=DataTools.setColor(0, report.getFudongkuiyin_t())%></td>
 									<td><%=DataTools.setColor(0, report.getFudongkuiyin_t() / (reports.size() - indexInt + 1))%></td>
-									<td><button onclick="del(<%=report.getId() %>)" type="button" class="btn btn-primary">删除</button></td>
+									<td><button onclick="del(<%=report.getId()%>)"
+											type="button" class="btn btn-primary">删除</button></td>
 								</tr>
 								<%
 									}
@@ -185,34 +187,35 @@
 			<h3>添加数据</h3>
 		</div>
 		<div class="modal-body">
-			<form class="form-horizontal" action="${pageContext.request.contextPath}/blotter/addBlotter">
+			<form class="form-horizontal"
+				action="${pageContext.request.contextPath}/blotter/addBlotter">
 				<fieldset>
 					<div class="control-group">
-						<label class="control-label" for="typeahead">上证指数
-						</label>
+						<label class="control-label" for="typeahead">上证指数 </label>
 						<div class="controls">
-							<input type="text" class="span6 typeahead" name="szzs" value="<%=StockInfoUtil.getStockDetail("sh000001").getPrice()%>"/>
+							<input type="text" class="span6 typeahead" name="szzs"
+								value="<%=StockInfoUtil.getStockDetail("sh000001").getPrice()%>" />
 						</div>
 					</div>
-										<div class="control-group">
-						<label class="control-label" for="typeahead">净资产
-						</label>
+					<div class="control-group">
+						<label class="control-label" for="typeahead">净资产 </label>
 						<div class="controls">
-							<input type="text" class="span6 typeahead" name="balance" value=""/>
+							<input type="text" class="span6 typeahead" name="balance"
+								value="" />
 						</div>
 					</div>
-										<div class="control-group">
-						<label class="control-label" for="typeahead">总资产
-						</label>
+					<div class="control-group">
+						<label class="control-label" for="typeahead">总资产 </label>
 						<div class="controls">
-							<input type="text" class="span6 typeahead" name="balanceYy" value=""/>
+							<input type="text" class="span6 typeahead" name="balanceYy"
+								value="" />
 						</div>
 					</div>
-					<div class="control-group" >
+					<div class="control-group">
 						<label class="control-label" for="date01">日期</label>
 						<div class="controls">
-							<input type="text" 
-								class="input-xlarge datepicker" name="createDate" value="<%=DateUtil.formatDate("yyyy/MM/dd")%>">
+							<input type="text" class="input-xlarge datepicker"
+								name="createDate" value="<%=DateUtil.formatDate("yyyy/MM/dd")%>">
 						</div>
 					</div>
 					<div class="form-actions">
@@ -222,7 +225,47 @@
 			</form>
 		</div>
 	</div>
-
+	<div class="modal hide fade" id="myZiJinModal">
+		<input id="curCode" type="hidden"> <input id="zoushiCyc"
+			type="hidden"> <input id="curIdx" type="hidden">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">×</button>
+			<h3>资金变更</h3>
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal"
+				action="${pageContext.request.contextPath}/balance/addBalance">
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="typeahead">变动类型 </label>
+						<div class="controls">
+							<select name="changeType">
+							  <option value="1">存入</option>
+							  <option value="-1">取出</option>
+							</select>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="typeahead">变动金额 </label>
+						<div class="controls">
+							<input type="text" class="span6 typeahead" name="balance"
+								value="" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="typeahead">备注 </label>
+						<div class="controls">
+							<input type="text" class="span6 typeahead" name="remark"
+								value="" />
+						</div>
+					</div>
+					<div class="form-actions">
+						<button type="submit" class="btn btn-primary">提交</button>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
 	<div class="clearfix"></div>
 
 	<footer>
@@ -241,6 +284,14 @@
 	<script type="text/javascript">
 		$('#addData').click(function(e) {
 			$('#myModal').modal('show').css({
+                width: 'auto',
+                'margin-left': function () {
+                    return -($(this).width() / 2);
+                }
+            });;
+		});
+		$('#addZiJinData').click(function(e) {
+			$('#myZiJinModal').modal('show').css({
                 width: 'auto',
                 'margin-left': function () {
                     return -($(this).width() / 2);
