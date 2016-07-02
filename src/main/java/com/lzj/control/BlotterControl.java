@@ -40,5 +40,14 @@ public class BlotterControl {
 		return "redirect:"+"/bootstrap/dangriyingkui.jsp";
 	}
 	
+	@RequestMapping("/dangriyingkui")
+	public String dangriyingkuiList(HttpServletRequest request) {
+		
+		BlotterDao blotterDao = new BlotterDao();
+
+		
+		return "redirect:"+"/bootstrap/dangriyingkui.jsp";
+	}
+	
 	
 }

@@ -34,14 +34,19 @@ public class DateUtil {
 	}
 
 	// 计算当前时间的0点0分0秒
-	public static Date getDateBegin(Date date) throws ParseException {
+	public static Date getDateBegin(Date date) {
 		if (date == null)
 			return null;
 
 		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
 
-		return fmt.parse(sdf.format(date));
+		try {
+			return fmt.parse(sdf.format(date));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return date;
 	}
 
 	/**

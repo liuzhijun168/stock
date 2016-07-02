@@ -56,4 +56,4 @@
 
 <script src="js/custom.js"></script>
 
-<script type="text/javascript" src="/stock/charts/swfobject.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/charts/swfobject.js"></script>
