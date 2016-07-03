@@ -18,7 +18,9 @@
 		两个bean, 是spring MVC为@Controllers分发请求所必须的 -->
 	<mvc:annotation-driven />
 	<mvc:resources mapping="/bootstrap/css/**" location="/bootstrap/css/" />
+	<mvc:resources mapping="/css/**" location="/css/" />
 	<mvc:resources mapping="/bootstrap/js/**" location="/bootstrap/js/" />
+	<mvc:resources mapping="/js/**" location="/js/" />
 	<mvc:resources mapping="/bootstrap/img/**" location="/bootstrap/img/" />
 	<mvc:resources mapping="/bootstrap/font/**" location="/bootstrap/font/" />
 	<mvc:resources mapping="/charts/**" location="/charts/" />
