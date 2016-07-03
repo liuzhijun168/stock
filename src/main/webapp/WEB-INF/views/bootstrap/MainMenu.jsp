@@ -1,3 +1,5 @@
+<%@page import="java.util.Date"%>
+<%@page import="com.lzj.util.DateUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <div id="sidebar-left" class="span2">
@@ -11,7 +13,7 @@
 				<ul>
 					<li><a href="hushenagu.jsp"><i class="icon-bar-chart"></i><span
 							class="hidden-tablet"> 沪深A股</span></a></li>
-					<li><a href="/fz/hushenagu_lishi"><i class="icon-bar-chart"></i><span
+					<li><a href="/fz/hushenagu_lishi?queryDate=<%=DateUtil.formatDate(new Date(), "yyyy-MM-dd")%>"><i class="icon-bar-chart"></i><span
 							class="hidden-tablet"> 沪深A股历史</span></a></li>
 					<li><a href="geguliandong.jsp"><i class="icon-bar-chart"></i><span
 							class="hidden-tablet"> 个股联动</span></a></li>

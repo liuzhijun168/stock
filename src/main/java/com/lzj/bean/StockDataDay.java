@@ -21,6 +21,7 @@ public class StockDataDay {
 	private double m60;
 	private double m120;
 	private double m250;
+	private String content;
 	private Date createDate;
 
 	public int getId() {
@@ -175,12 +176,20 @@ public class StockDataDay {
 		this.createDate = createDate;
 	}
 
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
 	@Override
 	public String toString() {
 		return "StockDataDay [id=" + id + ", b=" + b + ", c=" + c + ", d=" + d + ", e=" + e + ", r=" + r + ", p=" + p
 				+ ", q=" + q + ", s=" + s + ", o=" + o + ", m=" + m + ", m5=" + m5 + ", m10=" + m10 + ", m20=" + m20
-				+ ", m30=" + m30 + ", m60=" + m60 + ", m120=" + m120 + ", m250=" + m250 + ", createDate=" + createDate
-				+ "]";
+				+ ", m30=" + m30 + ", m60=" + m60 + ", m120=" + m120 + ", m250=" + m250 + ", content=" + content
+				+ ", createDate=" + createDate + "]";
 	}
 
 }

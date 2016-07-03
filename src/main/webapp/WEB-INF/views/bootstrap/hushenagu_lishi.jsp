@@ -3,6 +3,7 @@
 <%@page import="java.sql.ResultSet"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -96,6 +97,15 @@
 							<a href="#" class="btn-close"><i class="halflings-icon remove"></i></a>
 						</div>
 					</div> -->
+					<!-- <div class="box span12">
+						<div class="box-header" data-original-title>
+							<h2>
+								<i id="addData">添加数据</i><span class="break"></span>
+								<i id="addZiJinData">资金变更</i><span class="break"></span>
+							</h2>
+						</div>
+					</div>
+					- -->
 					<div class="box-content">
 						<table class="table table-striped table-bordered bootstrap-datatable datatable">
 						  <thead>
@@ -115,49 +125,21 @@
 							  </tr>
 						  </thead>   
 						  <tbody>
-						   <%
-						   	  int index = 0;
-							  while(resultSet.next()){
-								  // b代码
-								  String b = resultSet.getString("b");
-								  // d最新
-								  float d = resultSet.getFloat("d");
-								  // s昨收
-								  float s = resultSet.getFloat("s");
-								  // p最高
-								  float p = resultSet.getFloat("p");
-								  //q最低
-								  float q = resultSet.getFloat("q");
-								  float m5 = resultSet.getFloat("m5");
-								  float m10 = resultSet.getFloat("m10");
-								  float m20 = resultSet.getFloat("m20");
-								  String content = resultSet.getString("content");
-								  if(content == null){
-									  content = "";
-								  }else{
-									  content = content.replace("要点一#所属板块#", "");
-								  }
-								  //t振幅
-								  String t = String.format("%.2f",((d - s) * 100 / s)-((q - s) * 100 / s));
-								  //bbi
-								  float bbi = resultSet.getFloat("bbi");
-								  String bbibais = String.format("%.2f",((d - bbi) * 100 / bbi));
-								  index++;
-								  String createDate = resultSet.getString("create_date").substring(5);
-								  %>
-								<tr>
-								<td id="<%=index%>"><%=b%></td>
-								<td><%=resultSet.getString("c") %></td>
-								<td><%=content%></td>
-								<td><%=resultSet.getString("e") %></td>
-								<td><%=t %></td>
-								<td><%=bbibais%></td>
-								<td><%=q<m5?"m5;":"" %><%=q<m10?"m10;":"" %><%=q<m20?"m20;":"" %><%=d>=bbi?"bbi;":"" %></td>
-								<td><%=b.startsWith("6")?"沪A;":"" %><%=b.startsWith("000")?"深A;":"" %><%=b.startsWith("002")?"中小板;":"" %><%=b.startsWith("300")?"创业板;":"" %></td>
+						
+						   <c:forEach items="${stockDataDays}" var="stockDataDay" varStatus="index" >
+					            <tr>
+								<td id="${index }">${stockDataDay.b }</td>
+								<td>${stockDataDay.c }</td>
+								<td>${stockDataDay.content }</td>
+								<td>${stockDataDay.e }</td>
+								<td><%-- ${stockDataDay.t } --%></td>
+								<td><%-- ${stockDataDay.bbibais } --%></td>
+								<td><%-- <%=q<m5?"m5;":"" %><%=q<m10?"m10;":"" %><%=q<m20?"m20;":"" %><%=d>=bbi?"bbi;":"" %> --%></td>
+								<td><%-- <%=b.startsWith("6")?"沪A;":"" %><%=b.startsWith("000")?"深A;":"" %><%=b.startsWith("002")?"中小板;":"" %><%=b.startsWith("300")?"创业板;":"" %> --%></td>
 								<td>
-								<a href="#" class="btn btn-info zoushiImg" code="<%=b%>">走势</a>
+								<a href="#" class="btn btn-info zoushiImg" code="${stockDataDay.b }">走势</a>
 								</td>
-								<td><%=createDate%></td>
+								<td>${stockDataDay.createDate }</td>
 								<!--<td class="center">
 									<span class="label label-success">Active</span>
 								</td>
@@ -173,9 +155,8 @@
 									</a>
 								</td> -->
 							</tr>
-								  <% 
-							  }
-						   %>
+					        </c:forEach>
+						
 						  </tbody>
 					  </table>            
 					</div>

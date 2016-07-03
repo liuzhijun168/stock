@@ -45,8 +45,7 @@ public class BlotterControl {
 		
 		BlotterDao blotterDao = new BlotterDao();
 
-		
-		return "redirect:"+"/bootstrap/dangriyingkui.jsp";
+		return "bootstrap/dangriyingkui";
 	}
 	
 	

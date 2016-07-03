@@ -48,6 +48,10 @@ public class StockDataDayDao {
 				stockDataDay.setM60(resultSet.getDouble("m60"));
 				stockDataDay.setM120(resultSet.getDouble("m120"));
 				stockDataDay.setM250(resultSet.getDouble("m250"));
+				stockDataDay.setContent(resultSet.getString("content"));
+				if(stockDataDay.getContent() != null){
+					stockDataDay.setContent(stockDataDay.getContent().replace("要点一#所属板块#", ""));
+				}
 				stockDataDay.setCreateDate(resultSet.getDate("sdd.create_date"));
 				stockDataDays.add(stockDataDay);
 				
