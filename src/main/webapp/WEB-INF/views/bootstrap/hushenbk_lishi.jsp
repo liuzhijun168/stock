@@ -3,15 +3,10 @@
 <%@page import="java.sql.ResultSet"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-
-<%
-	String sql = "select * from stock_data_query sdq left join stock_ticai_detail td on sdq.b = td.code and orderBy=1";// and g is not null";
-	ResultSet resultSet = DBTools.getResult(sql);
-	
-%>
 
 <!-- start: Meta -->
 <meta charset="utf-8">
@@ -27,10 +22,10 @@
 <!-- end: Mobile Specific -->
 
 <!-- start: CSS -->
-<link id="bootstrap-style" href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-<link id="base-style" href="css/style.css" rel="stylesheet">
-<link id="base-style-responsive" href="css/style-responsive.css"
+<link id="bootstrap-style" href="${pageContext.request.contextPath}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link id="base-style" href="${pageContext.request.contextPath}/bootstrap/css/style.css" rel="stylesheet">
+<link id="base-style-responsive" href="${pageContext.request.contextPath}/bootstrap/css/style-responsive.css"
 	rel="stylesheet">
 <!-- end: CSS -->
 
@@ -46,7 +41,7 @@
 	<![endif]-->
 
 <!-- start: Favicon -->
-<link rel="shortcut icon" href="img/favicon.ico">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/bootstrap/img/favicon.ico">
 <!-- end: Favicon -->
 
 </head>
@@ -88,21 +83,14 @@
 
 		<div class="row-fluid sortable">		
 				<div class="box span12">
-					<!-- <div class="box-header" data-original-title>
-						<h2><i class="halflings-icon user"></i><span class="break"></span>Members</h2>
-						<div class="box-icon">
-							<a href="#" class="btn-setting"><i class="halflings-icon wrench"></i></a>
-							<a href="#" class="btn-minimize"><i class="halflings-icon chevron-up"></i></a>
-							<a href="#" class="btn-close"><i class="halflings-icon remove"></i></a>
-						</div>
-					</div> -->
+				     <a class="btn btn-primary preImg" onclick="goByDate('${preDate}')"> 上一页</a>
+				     <a class="btn btn-primary preImg" onclick="goByDate('${nextDate}')"> 下一页</a>
 					<div class="box-content">
 						<table class="table table-striped table-bordered bootstrap-datatable datatable">
 						  <thead>
 							  <tr>
 								  <th width="6%">代码</th>
 								  <th width="8%">名称</th>
-								  <th width="42%">行业</th>
 								  <th width="4%">涨%</th>
 								  <th width="4%">振%</th>
 								  <th width="4%">BBI%</th>
@@ -115,49 +103,19 @@
 							  </tr>
 						  </thead>   
 						  <tbody>
-						   <%
-						   	  int index = 0;
-							  while(resultSet.next()){
-								  // b代码
-								  String b = resultSet.getString("b");
-								  // d最新
-								  float d = resultSet.getFloat("d");
-								  // s昨收
-								  float s = resultSet.getFloat("s");
-								  // p最高
-								  float p = resultSet.getFloat("p");
-								  //q最低
-								  float q = resultSet.getFloat("q");
-								  float m5 = resultSet.getFloat("m5");
-								  float m10 = resultSet.getFloat("m10");
-								  float m20 = resultSet.getFloat("m20");
-								  String content = resultSet.getString("content");
-								  if(content == null){
-									  content = "";
-								  }else{
-									  content = content.replace("要点一#所属板块#", "");
-								  }
-								  //t振幅
-								  String t = String.format("%.2f",((d - s) * 100 / s)-((q - s) * 100 / s));
-								  //bbi
-								  float bbi = resultSet.getFloat("bbi");
-								  String bbibais = String.format("%.2f",((d - bbi) * 100 / bbi));
-								  index++;
-								  String createDate = resultSet.getString("create_date").substring(5);
-								  %>
-								<tr>
-								<td id="<%=index%>"><%=b%></td>
-								<td><%=resultSet.getString("c") %></td>
-								<td><%=content%></td>
-								<td><%=resultSet.getString("e") %></td>
-								<td><%=t %></td>
-								<td><%=bbibais%></td>
-								<td><%=q<m5?"m5;":"" %><%=q<m10?"m10;":"" %><%=q<m20?"m20;":"" %><%=d>=bbi?"bbi;":"" %></td>
-								<td><%=b.startsWith("6")?"沪A;":"" %><%=b.startsWith("000")?"深A;":"" %><%=b.startsWith("002")?"中小板;":"" %><%=b.startsWith("300")?"创业板;":"" %></td>
+						
+						   <c:forEach items="${stockBkDataDays}" var="stockBkDataDay" varStatus="index" >
+					            <tr>
+								<td id="${index }">${stockBkDataDay.b }</td>
+								<td>${stockBkDataDay.c }</td>
+								<td>${stockBkDataDay.e }</td>
+								<td><%-- ${stockBkDataDay.t } --%></td>
+								<td><%-- ${stockBkDataDay.bbibais } --%></td>
+								<td><%-- <%=q<m5?"m5;":"" %><%=q<m10?"m10;":"" %><%=q<m20?"m20;":"" %><%=d>=bbi?"bbi;":"" %> --%></td>
+								<td><%-- <%=b.startsWith("6")?"沪A;":"" %><%=b.startsWith("000")?"深A;":"" %><%=b.startsWith("002")?"中小板;":"" %><%=b.startsWith("300")?"创业板;":"" %> --%></td>
 								<td>
-								<a href="#" class="btn btn-info zoushiImg" code="<%=b%>">走势</a>
 								</td>
-								<td><%=createDate%></td>
+								<td>${stockBkDataDay.createDate }</td>
 								<!--<td class="center">
 									<span class="label label-success">Active</span>
 								</td>
@@ -173,9 +131,8 @@
 									</a>
 								</td> -->
 							</tr>
-								  <% 
-							  }
-						   %>
+					        </c:forEach>
+						
 						  </tbody>
 					  </table>            
 					</div>
@@ -290,6 +247,9 @@
 		$('#myModal').modal('show');
 	}
 	
+	function goByDate(goDate){
+		 window.location.href="${pageContext.request.contextPath}/fz/hushenbk_lishi?queryDate="+goDate; 
+	}
 	</script>
 	<!-- end: JavaScript-->
 	

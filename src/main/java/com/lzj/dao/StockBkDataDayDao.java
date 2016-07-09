@@ -10,50 +10,46 @@ import java.util.List;
 
 import com.lzj.DBTools;
 import com.lzj.bean.Blotter;
-import com.lzj.bean.StockDataDay;
+import com.lzj.bean.StockBkDataDay;
 import com.lzj.util.DateUtil;
 
-public class StockDataDayDao {
+public class StockBkDataDayDao {
 
-	public List<StockDataDay> getByCreateDate(Date createDate) {
-		List<StockDataDay> stockDataDays = new ArrayList<StockDataDay>();
+	public List<StockBkDataDay> getByCreateDate(Date createDate) {
+		List<StockBkDataDay> stockBkDataDays = new ArrayList<StockBkDataDay>();
 
 		Connection conn = DBTools.getConn();
 		PreparedStatement pstmt = null;
 		try {
 			conn = DBTools.getConn();
 			conn.setAutoCommit(false);
-			String sql = "select * from stock_data_day sdd left join stock_ticai_detail td on sdd.b = td.code and orderBy=1 where sdd.create_date = ?";
+			String sql = "select * from stock_bk_data_day sbdd where sbdd.create_date = ? order by e desc";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setObject(1, DateUtil.getDateBegin(createDate));
 			ResultSet resultSet = pstmt.executeQuery();
 			while (resultSet.next()) {
-				StockDataDay stockDataDay = new StockDataDay();
-				stockDataDay.setId(resultSet.getInt("id"));
-				stockDataDay.setB(resultSet.getString("b"));
-				stockDataDay.setC(resultSet.getString("c"));
-				stockDataDay.setD(resultSet.getDouble("d"));
-				stockDataDay.setE(resultSet.getDouble("e"));
-				stockDataDay.setR(resultSet.getDouble("r"));
-				stockDataDay.setP(resultSet.getDouble("p"));
-				stockDataDay.setQ(resultSet.getDouble("q"));
-				stockDataDay.setS(resultSet.getDouble("s"));
-				stockDataDay.setO(resultSet.getDouble("o"));
-				stockDataDay.setM(resultSet.getDouble("m"));
-				stockDataDay.setM5(resultSet.getDouble("m5"));
-				stockDataDay.setM10(resultSet.getDouble("m10"));
-				stockDataDay.setM20(resultSet.getDouble("m20"));
-				stockDataDay.setM30(resultSet.getDouble("m30"));
-				stockDataDay.setM60(resultSet.getDouble("m60"));
-				stockDataDay.setM120(resultSet.getDouble("m120"));
-				stockDataDay.setM250(resultSet.getDouble("m250"));
-				stockDataDay.setContent(resultSet.getString("content"));
-				if (stockDataDay.getContent() != null) {
-					stockDataDay.setContent(stockDataDay.getContent().replace("要点一#所属板块#", ""));
-				}
-				stockDataDay.setCreateDate(resultSet.getDate("sdd.create_date"));
-				stockDataDays.add(stockDataDay);
+				StockBkDataDay stockBkDataDay = new StockBkDataDay();
+				stockBkDataDay.setId(resultSet.getInt("id"));
+				stockBkDataDay.setB(resultSet.getString("b"));
+				stockBkDataDay.setC(resultSet.getString("c"));
+				stockBkDataDay.setD(resultSet.getDouble("d"));
+				stockBkDataDay.setE(resultSet.getDouble("e"));
+				stockBkDataDay.setR(resultSet.getDouble("r"));
+				stockBkDataDay.setP(resultSet.getDouble("p"));
+				stockBkDataDay.setQ(resultSet.getDouble("q"));
+				stockBkDataDay.setS(resultSet.getDouble("s"));
+				stockBkDataDay.setO(resultSet.getDouble("o"));
+				stockBkDataDay.setM(resultSet.getDouble("m"));
+				stockBkDataDay.setM5(resultSet.getDouble("m5"));
+				stockBkDataDay.setM10(resultSet.getDouble("m10"));
+				stockBkDataDay.setM20(resultSet.getDouble("m20"));
+				stockBkDataDay.setM30(resultSet.getDouble("m30"));
+				stockBkDataDay.setM60(resultSet.getDouble("m60"));
+				stockBkDataDay.setM120(resultSet.getDouble("m120"));
+				stockBkDataDay.setM250(resultSet.getDouble("m250"));
+				stockBkDataDay.setCreateDate(resultSet.getDate("sbdd.create_date"));
+				stockBkDataDays.add(stockBkDataDay);
 
 			}
 			conn.commit();
@@ -85,7 +81,7 @@ public class StockDataDayDao {
 				System.err.println("资源关闭失败!!!");
 			}
 		}
-		return stockDataDays;
+		return stockBkDataDays;
 
 	}
 
@@ -227,12 +223,14 @@ public class StockDataDayDao {
 	public Date getLastModifyDate() {
 		return DBTools.getDate("select create_date from stock_data_day order by create_date desc limit 1");
 	}
-	
+
+
 	public String getNextDateByCreateDate(String currentDate) {
-		return DBTools.getString("select create_date from stock_data_day where create_date > '"+currentDate+"' group by create_date order by create_date asc limit 1");
+		return DBTools.getString("select create_date from stock_bk_data_day where create_date > '"+currentDate+"' group by create_date order by create_date asc limit 1");
 	}
 
 	public String getPreDateByCreateDate(String currentDate) {
-		return DBTools.getString("	select create_date from stock_data_day where create_date < '"+currentDate+"' group by create_date order by create_date desc limit 1");
+		return DBTools.getString("	select create_date from stock_bk_data_day where create_date < '"+currentDate+"' group by create_date order by create_date desc limit 1");
 	}
+
 }

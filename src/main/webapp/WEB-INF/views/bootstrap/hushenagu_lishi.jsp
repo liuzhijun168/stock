@@ -8,12 +8,6 @@
 <html lang="en">
 <head>
 
-<%
-	String sql = "select * from stock_data_query sdq left join stock_ticai_detail td on sdq.b = td.code and orderBy=1";// and g is not null";
-	ResultSet resultSet = DBTools.getResult(sql);
-	
-%>
-
 <!-- start: Meta -->
 <meta charset="utf-8">
 <title>证券交易管理平台</title>
@@ -89,6 +83,8 @@
 
 		<div class="row-fluid sortable">		
 				<div class="box span12">
+				 <a class="btn btn-primary preImg" onclick="goByDate('${preDate}')"> 上一页</a>
+				     <a class="btn btn-primary preImg" onclick="goByDate('${nextDate}')"> 下一页</a>
 					<!-- <div class="box-header" data-original-title>
 						<h2><i class="halflings-icon user"></i><span class="break"></span>Members</h2>
 						<div class="box-icon">
@@ -269,6 +265,10 @@
 		}
 		$("#stockImg").attr("src","http://image.sinajs.cn/newchart/"+zoushiCyc+"/n/"+curCode+".gif"); 
 		$('#myModal').modal('show');
+	}
+	
+	function goByDate(goDate){
+		 window.location.href="${pageContext.request.contextPath}/fz/hushenagu_lishi?queryDate="+goDate; 
 	}
 	</script>
 	<!-- end: JavaScript-->

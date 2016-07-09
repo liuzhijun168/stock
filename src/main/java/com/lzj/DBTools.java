@@ -1,6 +1,7 @@
 package com.lzj;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -68,6 +69,19 @@ public class DBTools {
 			e.printStackTrace();
 		}
 		return "-99.99";
+	}
+	
+	public static java.util.Date getDate(String sql) {
+		try {
+			ResultSet resultSet = DBTools.getStatement().executeQuery(sql);
+			while (resultSet.next()) {
+				java.sql.Date resultDate = resultSet.getDate(1);
+				return new Date(resultDate.getTime());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public static ResultSet getResult(String sql) {

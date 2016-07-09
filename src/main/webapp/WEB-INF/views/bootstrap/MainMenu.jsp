@@ -15,6 +15,8 @@
 							class="hidden-tablet"> 沪深A股</span></a></li>
 					<li><a href="/fz/hushenagu_lishi?queryDate=<%=DateUtil.formatDate(new Date(), "yyyy-MM-dd")%>"><i class="icon-bar-chart"></i><span
 							class="hidden-tablet"> 沪深A股历史</span></a></li>
+					<li><a href="/fz/hushenbk_lishi?queryDate=<%=DateUtil.formatDate(new Date(), "yyyy-MM-dd")%>"><i class="icon-bar-chart"></i><span
+							class="hidden-tablet"> 沪深版块历史</span></a></li>		
 					<li><a href="/bootstrap/geguliandong.jsp"><i class="icon-bar-chart"></i><span
 							class="hidden-tablet"> 个股联动</span></a></li>
 					<li><a href="/bootstrap/gegugainian.jsp"><i class="icon-bar-chart"></i><span

@@ -8,12 +8,22 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.Queue;
+
+import com.lzj.dao.StockDataDayDao;
+import com.lzj.util.DateUtil;
 
 public class TdxMain {
 	public static void main(String[] args) throws IOException {
 
+		StockDataDayDao stockDataDayDao = new StockDataDayDao();
+		Date lastModifyDate = DateUtil.getDateEnd(stockDataDayDao.getLastModifyDate());
+		if(lastModifyDate == null){
+			DateUtil.str2Date("1979-01-01", "yyyy-MM-dd");
+		}
+		
 		Connection conn = DBTools.getConn();
 		PreparedStatement pstmt = null;
 		try {
@@ -26,6 +36,9 @@ public class TdxMain {
 			File tempFile = null;
 			for (int i = 0; i < files.length; i++) {
 				tempFile = files[i];
+				if(tempFile.isDirectory()){
+					continue;
+				}
 				BufferedReader br = new BufferedReader(new InputStreamReader(
 						new FileInputStream(tempFile), "GBK"));
 				String line = "";
@@ -47,60 +60,63 @@ public class TdxMain {
 					if (line.contains(",")) {
 						String[] dataArr = line.split(",");
 						String createDate = dataArr[0];
-						// b代码
-						String b = code;
-						// c名称
-						String c = name;
-						// r开盘
-						String r = dataArr[1];
-						// p最高
-						String p = dataArr[2];
-						// q最低
-						String q = dataArr[3];
-						// d最新
-						String d = dataArr[4];
-						// e涨幅
-						String e = String
-								.format("%.2f", (Float.parseFloat(d) - zuoshou)
-										* 100 / zuoshou);
-						if ("Infinity".equals(e)) {
-							e = "-99.99";
+						Date createDateTime = DateUtil.str2Date(createDate, "yyyy-MM-dd");
+						if(createDateTime.after(lastModifyDate)){
+							// b代码
+							String b = code;
+							// c名称
+							String c = name;
+							// r开盘
+							String r = dataArr[1];
+							// p最高
+							String p = dataArr[2];
+							// q最低
+							String q = dataArr[3];
+							// d最新
+							String d = dataArr[4];
+							// e涨幅
+							String e = String
+									.format("%.2f", (Float.parseFloat(d) - zuoshou)
+											* 100 / zuoshou);
+							if ("Infinity".equals(e)) {
+								e = "-99.99";
+							}
+
+							// s昨收
+							zuoshou = Float.parseFloat(d);
+							// o总手
+							String o = dataArr[5];
+							// m金额
+							String m = dataArr[6];
+
+							// System.out.println(line);
+							// System.out.println(createDate+"-"+b+"-"+c+"-"+r+"-"+p+"-"+q+"-"+d+"-"+o+"-"+m);
+							// String sql =
+							// "delete from `stock_data_day` where date_format(create_date,'%Y-%m-%d') =  ? ";
+							/*
+							 * pstmt = conn.prepareStatement(sql);
+							 * pstmt.setObject(1, createDate); pstmt.execute();
+							 */
+							pstmt.setObject(1, b);
+							pstmt.setObject(2, c);
+							pstmt.setObject(3, r);
+							pstmt.setObject(4, p);
+							pstmt.setObject(5, q);
+							pstmt.setObject(6, d);
+							pstmt.setObject(7, o);
+							pstmt.setObject(8, m);
+							pstmt.setObject(9, zuoshou);
+							pstmt.setObject(10, e);
+							pstmt.setObject(11, MaTools.setMa(queue5, 5, Float.parseFloat(d)));
+							pstmt.setObject(12, MaTools.setMa(queue10, 10, Float.parseFloat(d)));
+							pstmt.setObject(13, MaTools.setMa(queue20, 20, Float.parseFloat(d)));
+							pstmt.setObject(14, MaTools.setMa(queue30, 30, Float.parseFloat(d)));
+							pstmt.setObject(15, MaTools.setMa(queue60, 60, Float.parseFloat(d)));
+							pstmt.setObject(16, MaTools.setMa(queue120, 120, Float.parseFloat(d)));
+							pstmt.setObject(17, MaTools.setMa(queue250, 250, Float.parseFloat(d)));
+							pstmt.setObject(18, createDate);
+							pstmt.addBatch();
 						}
-
-						// s昨收
-						zuoshou = Float.parseFloat(d);
-						// o总手
-						String o = dataArr[5];
-						// m金额
-						String m = dataArr[6];
-
-						// System.out.println(line);
-						// System.out.println(createDate+"-"+b+"-"+c+"-"+r+"-"+p+"-"+q+"-"+d+"-"+o+"-"+m);
-						// String sql =
-						// "delete from `stock_data_day` where date_format(create_date,'%Y-%m-%d') =  ? ";
-						/*
-						 * pstmt = conn.prepareStatement(sql);
-						 * pstmt.setObject(1, createDate); pstmt.execute();
-						 */
-						pstmt.setObject(1, b);
-						pstmt.setObject(2, c);
-						pstmt.setObject(3, r);
-						pstmt.setObject(4, p);
-						pstmt.setObject(5, q);
-						pstmt.setObject(6, d);
-						pstmt.setObject(7, o);
-						pstmt.setObject(8, m);
-						pstmt.setObject(9, zuoshou);
-						pstmt.setObject(10, e);
-						pstmt.setObject(11, MaTools.setMa(queue5, 5, Float.parseFloat(d)));
-						pstmt.setObject(12, MaTools.setMa(queue10, 10, Float.parseFloat(d)));
-						pstmt.setObject(13, MaTools.setMa(queue20, 20, Float.parseFloat(d)));
-						pstmt.setObject(14, MaTools.setMa(queue30, 30, Float.parseFloat(d)));
-						pstmt.setObject(15, MaTools.setMa(queue60, 60, Float.parseFloat(d)));
-						pstmt.setObject(16, MaTools.setMa(queue120, 120, Float.parseFloat(d)));
-						pstmt.setObject(17, MaTools.setMa(queue250, 250, Float.parseFloat(d)));
-						pstmt.setObject(18, createDate);
-						pstmt.addBatch();
 					}
 				}
 

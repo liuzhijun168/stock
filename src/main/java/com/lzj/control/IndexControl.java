@@ -9,13 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/index")
 public class IndexControl {
 
-
-
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "")
 	public String index(HttpServletRequest request) {
-System.out.println("IndexControl.lishi()");
-
-		 return "index"; 
+		return "bootstrap/dangriyingkui";
 	}
-	
+
 }

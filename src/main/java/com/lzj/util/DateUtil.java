@@ -49,6 +49,22 @@ public class DateUtil {
 		return date;
 	}
 
+	// 计算当前时间的23点59分59秒
+	public static Date getDateEnd(Date date) {
+		if (date == null)
+			return null;
+
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd 23:59:59");
+
+		try {
+			return fmt.parse(sdf.format(date));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return date;
+	}
+
 	/**
 	 * 两个时间之间的时间差。
 	 * 
