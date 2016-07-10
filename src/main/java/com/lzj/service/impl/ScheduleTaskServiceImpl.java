@@ -18,6 +18,7 @@ public class ScheduleTaskServiceImpl implements ScheduleTaskService {
 
 	@Override
 	public void execute() {
+		System.out.println("ScheduleTaskServiceImpl.execute()");
 		DataTools.loadLastestData();
 	}
 	
