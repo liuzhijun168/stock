@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.lzj.DBTools;
+import com.lzj.MaTools;
 import com.lzj.bean.Blotter;
 import com.lzj.bean.StockDataDay;
 import com.lzj.util.DateUtil;
@@ -89,19 +90,33 @@ public class StockDataDayDao {
 
 	}
 
-	public void addBlotter(Blotter blotter) {
+	public void addStockDataDay(StockDataDay stockDataDay) {
 		Connection conn = DBTools.getConn();
 		PreparedStatement pstmt = null;
 		try {
 			conn = DBTools.getConn();
 			conn.setAutoCommit(false);
-			String sql = "insert blotter(szzs,balance,balance_yy,create_date) values(?,?,?,?)";
+			String sql = "INSERT INTO `stock_data_day`(b,c,r,p,q,d,o,m,s,e,m5,m10,m20,m30,m60,m120,m250,create_date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setObject(1, blotter.getSzzs());
-			pstmt.setObject(2, blotter.getBalance());
-			pstmt.setObject(3, blotter.getBalanceYy());
-			pstmt.setObject(4, blotter.getCreateDate());
+			stockDataDay.getD();
+			pstmt.setObject(1, stockDataDay.getB());
+			pstmt.setObject(2, stockDataDay.getC());
+			pstmt.setObject(3, stockDataDay.getR());
+			pstmt.setObject(4, stockDataDay.getP());
+			pstmt.setObject(5, stockDataDay.getQ());
+			pstmt.setObject(6, stockDataDay.getD());
+			pstmt.setObject(7, stockDataDay.getO());
+			pstmt.setObject(8, stockDataDay.getM());
+			pstmt.setObject(9, stockDataDay.getS());
+			pstmt.setObject(10, stockDataDay.getE());
+			pstmt.setObject(11, stockDataDay.getM5());
+			pstmt.setObject(12, stockDataDay.getM10());
+			pstmt.setObject(13, stockDataDay.getM20());
+			pstmt.setObject(14, stockDataDay.getM30());
+			pstmt.setObject(15, stockDataDay.getM60());
+			pstmt.setObject(16, stockDataDay.getM120());
+			pstmt.setObject(17, stockDataDay.getM250());
+			pstmt.setObject(18, stockDataDay.getCreateDate());
 			pstmt.executeUpdate();
 			conn.commit();
 
@@ -227,12 +242,14 @@ public class StockDataDayDao {
 	public Date getLastModifyDate() {
 		return DBTools.getDate("select create_date from stock_data_day order by create_date desc limit 1");
 	}
-	
+
 	public String getNextDateByCreateDate(String currentDate) {
-		return DBTools.getString("select create_date from stock_data_day where create_date > '"+currentDate+"' group by create_date order by create_date asc limit 1");
+		return DBTools.getString("select create_date from stock_data_day where create_date > '" + currentDate
+				+ "' group by create_date order by create_date asc limit 1");
 	}
 
 	public String getPreDateByCreateDate(String currentDate) {
-		return DBTools.getString("	select create_date from stock_data_day where create_date < '"+currentDate+"' group by create_date order by create_date desc limit 1");
+		return DBTools.getString("	select create_date from stock_data_day where create_date < '" + currentDate
+				+ "' group by create_date order by create_date desc limit 1");
 	}
 }

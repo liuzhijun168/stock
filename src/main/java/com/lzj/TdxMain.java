@@ -17,6 +17,10 @@ import com.lzj.util.DateUtil;
 
 public class TdxMain {
 	public static void main(String[] args) throws IOException {
+		loadTdxData("D:/tools/new_tdx/T0002/export");
+	}
+	
+	public static void loadTdxData(String filePath) throws IOException {
 
 		StockDataDayDao stockDataDayDao = new StockDataDayDao();
 		Date lastModifyDate = DateUtil.getDateEnd(stockDataDayDao.getLastModifyDate());
@@ -30,7 +34,7 @@ public class TdxMain {
 			conn = DBTools.getConn();
 			conn.setAutoCommit(false);
 
-			File dirFile = new File("D:/tools/new_tdx/T0002/export");
+			File dirFile = new File(filePath);
 			File[] files = dirFile.listFiles();
 
 			File tempFile = null;

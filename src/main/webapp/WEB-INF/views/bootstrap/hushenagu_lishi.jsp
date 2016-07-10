@@ -4,6 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -127,7 +128,7 @@
 								<td id="${index }">${stockDataDay.b }</td>
 								<td>${stockDataDay.c }</td>
 								<td>${stockDataDay.content }</td>
-								<td>${stockDataDay.e }</td>
+								<td><fmt:formatNumber value="${stockDataDay.e }" pattern="0.00#"/></td>
 								<td><%-- ${stockDataDay.t } --%></td>
 								<td><%-- ${stockDataDay.bbibais } --%></td>
 								<td><%-- <%=q<m5?"m5;":"" %><%=q<m10?"m10;":"" %><%=q<m20?"m20;":"" %><%=d>=bbi?"bbi;":"" %> --%></td>

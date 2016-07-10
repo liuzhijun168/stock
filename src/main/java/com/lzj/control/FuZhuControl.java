@@ -1,5 +1,11 @@
 package com.lzj.control;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -17,6 +23,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lzj.TdxMain;
 import com.lzj.bean.StockBkDataDay;
 import com.lzj.bean.StockDataDay;
 import com.lzj.dao.StockBkDataDayDao;
@@ -50,7 +57,6 @@ public class FuZhuControl {
 
 		String preDate = stockBkDataDayDao.getPreDateByCreateDate(currentDate);
 		String nextDate = stockBkDataDayDao.getNextDateByCreateDate(currentDate);
-		;
 
 		StockDataDayDao stockDataDayDao = new StockDataDayDao();
 		List<StockDataDay> stockDataDays = stockDataDayDao.getByCreateDate(queryDate);
@@ -106,7 +112,50 @@ public class FuZhuControl {
 		request.setAttribute("bkType", bkType);
 		return "bootstrap/bkduibi_line";
 	}
-
+	
+	@RequestMapping("/zhangdiefufenbu")
+	public String zhangdiefufenbu(HttpServletRequest request, String bkType) {
+		request.setAttribute("bkType", bkType);
+		return "bootstrap/zhangdiefufenbu";
+	}
+	
+	@RequestMapping("/reloadStockData")
+	public String reloadStockData(HttpServletRequest request) throws Exception {
+		StockDataDayDao stockDataDayDao = new StockDataDayDao();
+		System.out.println("FuZhuControl.reloadStockData()");
+		String filePath = this.getClass().getResource("/mytbl.txt").getPath().toString();
+		System.out.println(filePath);
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+				new FileInputStream(filePath), "UTF-8"));
+		String line = "";
+		
+		while ((line = br.readLine()) != null) {
+			System.out.println(line);
+			String[] datas = line.split("	");
+			StockDataDay stockDataDay = new StockDataDay();
+			stockDataDay.setB(datas[1]);
+			stockDataDay.setC(datas[2]);
+			stockDataDay.setD(Double.parseDouble(datas[3]));
+			stockDataDay.setE(Double.parseDouble(datas[4]));
+			stockDataDay.setR(Double.parseDouble(datas[5]));
+			stockDataDay.setP(Double.parseDouble(datas[6]));
+			stockDataDay.setQ(Double.parseDouble(datas[7]));
+			stockDataDay.setS(Double.parseDouble(datas[8]));
+			stockDataDay.setO(Double.parseDouble(datas[9]));
+			stockDataDay.setM(Double.parseDouble(datas[10]));
+			stockDataDay.setM5(Double.parseDouble(datas[11]));
+			stockDataDay.setM10(Double.parseDouble(datas[12]));
+			stockDataDay.setM20(Double.parseDouble(datas[13]));
+			stockDataDay.setM30(Double.parseDouble(datas[14]));
+			stockDataDay.setM60(Double.parseDouble(datas[15]));
+			stockDataDay.setM120(Double.parseDouble(datas[16]));
+			stockDataDay.setM250(Double.parseDouble(datas[17]));
+			stockDataDay.setCreateDate(DateUtil.str2Date(datas[18],"yyyy-MM-dd"));
+			stockDataDayDao.addStockDataDay(stockDataDay );
+		}
+		return "bootstrap/zhangdiefufenbu";
+	}
+	
 	@RequestMapping(value = "/bkduibi_line_data", produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String bkBiJiaoLineData(HttpServletRequest request, String bkType) {

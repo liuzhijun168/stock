@@ -18,10 +18,10 @@
 <!-- end: Mobile Specific -->
 
 <!-- start: CSS -->
-<link id="bootstrap-style" href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-<link id="base-style" href="css/style.css" rel="stylesheet">
-<link id="base-style-responsive" href="css/style-responsive.css"
+<link id="bootstrap-style" href="${pageContext.request.contextPath}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link id="base-style" href="${pageContext.request.contextPath}/bootstrap/css/style.css" rel="stylesheet">
+<link id="base-style-responsive" href="${pageContext.request.contextPath}/bootstrap/css/style-responsive.css"
 	rel="stylesheet">
 <!-- end: CSS -->
 
@@ -37,7 +37,7 @@
 	<![endif]-->
 
 <!-- start: Favicon -->
-<link rel="shortcut icon" href="img/favicon.ico">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/bootstrap/img/favicon.ico">
 <!-- end: Favicon -->
 
 </head>
@@ -127,9 +127,9 @@
 		<jsp:include page="Js.jsp"></jsp:include>
 		<script type="text/javascript">
 		swfobject.embedSWF(
-		  "/stock/charts/open-flash-chart.swf", "my_chart", "1100", "480",
+		  "${pageContext.request.contextPath}/charts/open-flash-chart.swf", "my_chart", "1100", "480",
 		  "9.0.0", "expressInstall.swf",
-		  {"data-file":"/stock/ChartServlet","loading":"数据加载中..."}
+		  {"data-file":"${pageContext.request.contextPath}/ChartServlet","loading":"数据加载中..."}
 		 // {"data-file":"/stock/charts/data.txt","loading":"数据加载中..."}
 		  );
 		</script>
