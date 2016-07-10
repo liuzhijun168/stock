@@ -30,14 +30,21 @@ public class DBTools {
 		if(connection != null){
 			try {
 				if(connection.isClosed()){
-					connection = null;
-					return getConn();
+					connection = getCreateConn();
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 			return connection;
 		}
+		
+		connection = getCreateConn();
+
+		return connection;
+	}
+	
+	public static Connection getCreateConn(){
+		Connection connection = null;
 		try {
 			PropsUtil propsUtil = new PropsUtil();
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -46,10 +53,8 @@ public class DBTools {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return connection;
 	}
-	
 	public static int updateData(String sql){
 		try {
 			return DBTools.getStatement().executeUpdate(sql);

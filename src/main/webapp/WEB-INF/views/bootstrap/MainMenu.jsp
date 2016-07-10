@@ -17,19 +17,21 @@
 							class="hidden-tablet"> 沪深A股历史</span></a></li>
 					<li><a href="/fz/hushenbk_lishi?queryDate=<%=DateUtil.formatDate(new Date(), "yyyy-MM-dd")%>"><i class="icon-bar-chart"></i><span
 							class="hidden-tablet"> 沪深版块历史</span></a></li>		
-					<li><a href="/bootstrap/geguliandong.jsp"><i class="icon-bar-chart"></i><span
+					<li><a href="/fz/bkduibi_line?bkType=8809"><i class="icon-bar-chart"></i><span
+							class="hidden-tablet"> 沪深版块对比</span></a></li>	
+					<!-- <li><a href="/bootstrap/geguliandong.jsp"><i class="icon-bar-chart"></i><span
 							class="hidden-tablet"> 个股联动</span></a></li>
 					<li><a href="/bootstrap/gegugainian.jsp"><i class="icon-bar-chart"></i><span
-							class="hidden-tablet"> 个股概念</span></a></li>
+							class="hidden-tablet"> 个股概念</span></a></li> -->
 					<li><a href="/bootstrap/zhangdiefufenbu.jsp"><i
 							class="icon-bar-chart"></i><span class="hidden-tablet">
 								涨跌幅分布</span></a></li>
-					<li><a href="/bootstrap/jujizhangtingban.jsp"><i
+					<!-- <li><a href="/bootstrap/jujizhangtingban.jsp"><i
 							class="icon-bar-chart"></i><span class="hidden-tablet">
-								狙击涨停板</span></a></li>
-					<li><a href="/stock/RongQuanServlet"><i
+								狙击涨停板</span></a></li> -->
+					<!-- <li><a href="/stock/RongQuanServlet"><i
 							class="icon-bar-chart"></i><span class="hidden-tablet">
-								融券分析</span></a></li>
+								融券分析</span></a></li> -->
 				</ul></li>
 			<li><a class="dropmenu" href="#"><i class="icon-list-alt"></i><span
 					class="hidden-tablet"> 报表统计</span><span
@@ -43,8 +45,8 @@
 					class="hidden-tablet"> 总资产</span></a></li>
 					<li><a href="/bootstrap/dangriyingkui_dapan_chart.jsp"><i class="icon-bar-chart"></i><span
 					class="hidden-tablet"> 盈亏-大盘曲线</span></a></li>
-					<li><a href="/bootstrap/rishouru_chart.jsp"><i class="icon-bar-chart"></i><span
-					class="hidden-tablet"> 日收入曲线</span></a></li>
+					<!-- <li><a href="/bootstrap/rishouru_chart.jsp"><i class="icon-bar-chart"></i><span
+					class="hidden-tablet"> 日收入曲线</span></a></li> -->
 					<li><a href="/bootstrap/rijunshouru_chart.jsp"><i class="icon-bar-chart"></i><span
 					class="hidden-tablet"> 日均收入曲线</span></a></li>
 				</ul></li>
@@ -58,7 +60,7 @@
 					<li><a class="submenu" href="/bootstrap/junxianduotoupailie.jsp"><i
 							class="icon-file-alt"></i><span class="hidden-tablet">
 								均线多头排列</span></a></li>
-					<li><a class="submenu" href="/bootstrap/hongsanbing.jsp"><i
+					<!-- <li><a class="submenu" href="/bootstrap/hongsanbing.jsp"><i
 							class="icon-file-alt"></i><span class="hidden-tablet"> 红三兵</span></a></li>
 					<li><a class="submenu" href="/bootstrap/zaochenzhixing.jsp"><i
 							class="icon-file-alt"></i><span class="hidden-tablet">
@@ -83,7 +85,7 @@
 								KDJ*</span></a></li>
 					<li><a class="submenu" href="/bootstrap/liutongpan.jsp?num=20"><i
 							class="icon-file-alt"></i><span class="hidden-tablet">
-								BBI*</span></a></li>
+								BBI*</span></a></li> -->
 				</ul></li>
 			<li><a class="dropmenu" href="#"><i class="icon-list-alt"></i><span
 					class="hidden-tablet"> 行业资金出入</span><span
