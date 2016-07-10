@@ -48,7 +48,7 @@
 	<![endif]-->
 
 <!-- start: Favicon -->
-<link rel="shortcut icon" href="img/favicon.ico">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico">
 <!-- end: Favicon -->
 
 </head>
@@ -188,7 +188,7 @@
 		</div>
 		<div class="modal-body">
 			<form class="form-horizontal"
-				action="${pageContext.request.contextPath}/blotter/addBlotter">
+				action="${pageContext.request.contextPath}/bbtj/addBlotter">
 				<fieldset>
 					<div class="control-group">
 						<label class="control-label" for="typeahead">上证指数 </label>
@@ -298,12 +298,18 @@
                 }
             });;
 		});
-		$("#form_datetime").datetimepicker({
-			format : 'yyyy-mm-dd'
-		});
+		
 		function del(blotterId){
-			 window.location.href="${pageContext.request.contextPath}/blotter/delBlotter?blotterId="+blotterId; 
+			 window.location.href="${pageContext.request.contextPath}/bbtj/delBlotter?blotterId="+blotterId; 
 		}
+		$('.datatable').dataTable({
+			"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
+			"sPaginationType": "bootstrap",
+			"iDisplayLength": 100,
+			"oLanguage": {
+			"sLengthMenu": "_MENU_ records per page"
+			}
+		} );
 	</script>
 	<!-- end: JavaScript-->
 

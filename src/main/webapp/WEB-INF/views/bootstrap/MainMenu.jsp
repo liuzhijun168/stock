@@ -11,7 +11,7 @@
 					class="hidden-tablet"> 辅助归类</span><span
 					class="label label-important"> 5 </span></a>
 				<ul>
-					<li><a href="/bootstrap/hushenagu.jsp"><i class="icon-bar-chart"></i><span
+					<li><a href="/fz/hushenagu"><i class="icon-bar-chart"></i><span
 							class="hidden-tablet"> 沪深A股</span></a></li>
 					<li><a href="/fz/hushenagu_lishi?queryDate=<%=DateUtil.formatDate(new Date(), "yyyy-MM-dd")%>"><i class="icon-bar-chart"></i><span
 							class="hidden-tablet"> 沪深A股历史</span></a></li>
@@ -23,7 +23,7 @@
 							class="hidden-tablet"> 个股联动</span></a></li>
 					<li><a href="/bootstrap/gegugainian.jsp"><i class="icon-bar-chart"></i><span
 							class="hidden-tablet"> 个股概念</span></a></li> -->
-					<li><a href="/bootstrap/zhangdiefufenbu.jsp"><i
+					<li><a href="/fz/zhangdiefufenbu"><i
 							class="icon-bar-chart"></i><span class="hidden-tablet">
 								涨跌幅分布</span></a></li>
 					<!-- <li><a href="/bootstrap/jujizhangtingban.jsp"><i
@@ -37,7 +37,7 @@
 					class="hidden-tablet"> 报表统计</span><span
 					class="label label-important"> 5 </span></a>
 				<ul>
-					<li><a href="/bootstrap/dangriyingkui.jsp"><i class="icon-bar-chart"></i><span
+					<li><a href="/bbtj/dangriyingkui"><i class="icon-bar-chart"></i><span
 							class="hidden-tablet"> 当日盈亏</span></a></li>
 					<li><a href="/bootstrap/dangriyingkui_chart.jsp"><i class="icon-bar-chart"></i><span
 					class="hidden-tablet"> 盈亏曲线</span></a></li>

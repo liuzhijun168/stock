@@ -2,10 +2,7 @@ package com.lzj.control;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,7 +20,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.lzj.TdxMain;
 import com.lzj.bean.StockBkDataDay;
 import com.lzj.bean.StockDataDay;
 import com.lzj.dao.StockBkDataDayDao;
@@ -35,8 +31,6 @@ import com.lzj.util.DateUtil;
 @RequestMapping("/fz")
 public class FuZhuControl {
 
-	private DecimalFormat df = new DecimalFormat("#.00");
-
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -44,6 +38,16 @@ public class FuZhuControl {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true)); // true:允许输入空值，false:不能为空值
 	}
 
+	@RequestMapping("/hushenagu")
+	public String hushenagu(HttpServletRequest request) {
+		return "bootstrap/hushenagu";
+	}
+	
+	@RequestMapping("/zhangdiefufenbu")
+	public String zhangdiefufenbu(HttpServletRequest request) {
+		return "bootstrap/zhangdiefufenbu";
+	}
+	
 	@RequestMapping("/hushenagu_lishi")
 	public String aguLishi(HttpServletRequest request, Date queryDate) {
 
@@ -113,24 +117,15 @@ public class FuZhuControl {
 		return "bootstrap/bkduibi_line";
 	}
 	
-	@RequestMapping("/zhangdiefufenbu")
-	public String zhangdiefufenbu(HttpServletRequest request, String bkType) {
-		request.setAttribute("bkType", bkType);
-		return "bootstrap/zhangdiefufenbu";
-	}
-	
 	@RequestMapping("/reloadStockData")
 	public String reloadStockData(HttpServletRequest request) throws Exception {
 		StockDataDayDao stockDataDayDao = new StockDataDayDao();
-		System.out.println("FuZhuControl.reloadStockData()");
 		String filePath = this.getClass().getResource("/mytbl.txt").getPath().toString();
-		System.out.println(filePath);
 		BufferedReader br = new BufferedReader(new InputStreamReader(
 				new FileInputStream(filePath), "UTF-8"));
 		String line = "";
 		
 		while ((line = br.readLine()) != null) {
-			System.out.println(line);
 			String[] datas = line.split("	");
 			StockDataDay stockDataDay = new StockDataDay();
 			stockDataDay.setB(datas[1]);
@@ -153,6 +148,7 @@ public class FuZhuControl {
 			stockDataDay.setCreateDate(DateUtil.str2Date(datas[18],"yyyy-MM-dd"));
 			stockDataDayDao.addStockDataDay(stockDataDay );
 		}
+		br.close();
 		return "bootstrap/zhangdiefufenbu";
 	}
 	
@@ -160,14 +156,13 @@ public class FuZhuControl {
 	@ResponseBody
 	public String bkBiJiaoLineData(HttpServletRequest request, String bkType) {
 		StockBkDataDayDao stockBkDataDayDao = new StockBkDataDayDao();
-System.out.println(bkType);
 		Map<String,String> codeAndType = new HashMap<String,String>();
 		codeAndType.put("8802", "地区板块");
 		codeAndType.put("8803", "行业板块1");
 		codeAndType.put("8804", "行业板块2");
 		codeAndType.put("8805", "概念板块1");
-		codeAndType.put("8808", "概念板块2");
-		codeAndType.put("8809", "概念板块3");
+		codeAndType.put("8809", "概念板块2");
+		codeAndType.put("8808", "风格板块");
 		List<String> bkCodeList = stockBkDataDayDao.getBkCodeList(bkType);
 		Date createDate = new Date();
 		createDate = DateUtil.addDay(createDate, -60);
@@ -185,7 +180,6 @@ System.out.println(bkType);
 
 			jsonArray.append("{ \"elements\": [ ");
 
-			boolean flag = true;
 			int maxValue = 0;
 			int minValue = 0;
 

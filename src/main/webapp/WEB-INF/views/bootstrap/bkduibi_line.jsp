@@ -89,8 +89,8 @@
 						<a class="btn btn-primary preImg" onclick="changgeBkType('8803')"> 行业板块1</a>
 						<a class="btn btn-primary preImg" onclick="changgeBkType('8804')"> 行业板块2</a>
 						<a class="btn btn-primary preImg" onclick="changgeBkType('8805')"> 概念板块1</a>
-						<a class="btn btn-primary preImg" onclick="changgeBkType('8808')"> 概念板块2</a>
-						<a class="btn btn-primary preImg" onclick="changgeBkType('8809')"> 概念板块3</a>
+						<a class="btn btn-primary preImg" onclick="changgeBkType('8809')"> 概念板块2</a>
+						<a class="btn btn-primary preImg" onclick="changgeBkType('8808')"> 风格板块</a>
 					</div>
 					<div id="my_chart"></div>
 					<!-- End .sparkStats -->

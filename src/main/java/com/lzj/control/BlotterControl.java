@@ -11,7 +11,7 @@ import com.lzj.bean.Blotter;
 import com.lzj.dao.BlotterDao;
 
 @Controller
-@RequestMapping("/blotter")
+@RequestMapping("/bbtj")
 public class BlotterControl {
 
 	@RequestMapping("/addBlotter")
