@@ -16,7 +16,6 @@ public class ScheduleTaskServiceImpl implements ScheduleTaskService {
 
 	public static final Logger logger = LoggerFactory.getLogger(ScheduleTaskServiceImpl.class);
 
-	@Override
 	public void execute() {
 		System.out.println("ScheduleTaskServiceImpl.execute()");
 		DataTools.loadLastestData();
