@@ -22,7 +22,7 @@ public class InitServlet extends HttpServlet {
 		super.init();
 		Thread thread =  new Thread(new Runnable() {
 			public void run() {
-				DataTools.loadLastestData();
+				DataTools.loadLastestData(0);
 			}
 		});
 		thread.start();

@@ -30,7 +30,7 @@ public class DataTools {
 
 	public static void main(String[] args) {
 		// getJinZhenTanDi();
-		loadLastestData();
+		loadLastestData(500);
 	}
 
 	public static List<String> getStockCodeList() {
@@ -69,7 +69,7 @@ public class DataTools {
 		return Double.parseDouble(DBTools.getString("select sum(balance) from balance"));
 	}
 
-	public static void loadLastestData() {
+	public static void loadLastestData(long millis) {
 
 		String stockCode = null;
 		HttpResponse response = null;
@@ -109,7 +109,7 @@ public class DataTools {
 								}
 								insert(stockDataCode, stockData);
 							}
-							Thread.sleep(500);
+							Thread.sleep(millis);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
