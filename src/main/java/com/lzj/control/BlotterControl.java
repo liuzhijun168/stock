@@ -45,7 +45,7 @@ public class BlotterControl {
 		
 		BlotterDao blotterDao = new BlotterDao();
 
-		return "bootstrap/dangriyingkui";
+		return "/bootstrap/dangriyingkui";
 	}
 	
 	@RequestMapping("/dangriyingkui_chart")

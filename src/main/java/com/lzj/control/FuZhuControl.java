@@ -40,12 +40,12 @@ public class FuZhuControl {
 
 	@RequestMapping("/hushenagu")
 	public String hushenagu(HttpServletRequest request) {
-		return "bootstrap/hushenagu";
+		return "/bootstrap/hushenagu";
 	}
 	
 	@RequestMapping("/zhangdiefufenbu")
 	public String zhangdiefufenbu(HttpServletRequest request) {
-		return "bootstrap/zhangdiefufenbu";
+		return "/bootstrap/zhangdiefufenbu";
 	}
 	
 	@RequestMapping("/hushenagu_lishi")
@@ -101,7 +101,7 @@ public class FuZhuControl {
 		request.setAttribute("preDate", preDate);
 		request.setAttribute("nextDate", nextDate);
 		// return "redirect:" + "/bootstrap/hushenagu_lishi.jsp";
-		return "bootstrap/hushenbk_lishi";
+		return "/bootstrap/hushenbk_lishi";
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class FuZhuControl {
 	@RequestMapping("/bkduibi_line")
 	public String bkBiJiaoLine(HttpServletRequest request, String bkType) {
 		request.setAttribute("bkType", bkType);
-		return "bootstrap/bkduibi_line";
+		return "/bootstrap/bkduibi_line";
 	}
 	
 	@RequestMapping("/reloadStockData")
@@ -149,7 +149,7 @@ public class FuZhuControl {
 			stockDataDayDao.addStockDataDay(stockDataDay );
 		}
 		br.close();
-		return "bootstrap/zhangdiefufenbu";
+		return "/bootstrap/zhangdiefufenbu";
 	}
 	
 	@RequestMapping(value = "/bkduibi_line_data", produces = "text/html;charset=UTF-8")
