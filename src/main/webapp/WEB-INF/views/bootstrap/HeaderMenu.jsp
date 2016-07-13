@@ -140,13 +140,13 @@
 		<!-- start: User Dropdown -->
 		<li class="dropdown"><a class="btn dropdown-toggle"
 			data-toggle="dropdown" href="#"> <i
-				class="halflings-icon white user"></i> 刘志军 <span class="caret"></span>
+				class="halflings-icon white user"></i> ${user.nickname } <span class="caret"></span>
 		</a>
 			<ul class="dropdown-menu">
 				<li class="dropdown-menu-title"><span>Account Settings</span></li>
 				<li><a href="#"><i class="halflings-icon user"></i> Profile</a></li>
-				<li><a href="login.html"><i class="halflings-icon off"></i>
-						Logout</a></li>
+				<li><a href="${pageContext.request.contextPath}/system/login"><i class="halflings-icon off"></i>
+						退出</a></li>
 			</ul></li>
 		<!-- end: User Dropdown -->
 	</ul>

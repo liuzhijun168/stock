@@ -26,7 +26,8 @@ import com.lzj.util.StockUtil;
 
 public class DataTools {
 
-	private static double initszzs = 2925.23;;
+	//private static double initszzs = 2925.23;;
+	private static double initszzs = 3060.69;
 
 	public static void main(String[] args) {
 		// getJinZhenTanDi();
@@ -66,72 +67,83 @@ public class DataTools {
 	}
 
 	public static double getBenjin() {
-		return Double.parseDouble(DBTools.getString("select sum(balance) from balance"));
+		return getBenjin(1);
+	}
+	
+	public static double getBenjin(int userId) {
+		double benjin = 0;
+		if(userId == 2 ){
+			benjin = 42353.86;
+		}else{
+			benjin = Double.parseDouble(DBTools.getString("select sum(balance) from balance "));
+		}
+		return benjin;
 	}
 
 	public static void loadLastestData(long millis) {
 
 		String stockCode = null;
 		HttpResponse response = null;
-	
-		
-		//String sysParam = DBTools.getString("select s_value from system_param where s_key='get_net_stock_data'");
-		//while ("1".equals(sysParam)) {
-			try {
-				List<String> stockCodeList = getStockCodeList();
-				Collections.shuffle(stockCodeList);
-				StringBuffer stockStringBuffer = new StringBuffer();
-				for (int i = 0; i < stockCodeList.size(); i++) {
-					stockCode = stockCodeList.get(i);
 
-					String fullStockCode = StockUtil.getFullStockCode(stockCode);
-					if (i % 100 == 0 || (i == stockCodeList.size() - 1)) {
-						stockStringBuffer.append(fullStockCode);
-						try {
-							String stockString = stockStringBuffer.toString();
-							stockStringBuffer = new StringBuffer();
-							String url = "http://hq.sinajs.cn/list=" + stockString;
-							String str = HttpUtil.getJsonContent(url);
-							//System.out.println(url);
-							String[] stockDataArr = str.split("\\n");
-							for (String stockData : stockDataArr) {
-								//System.out.println(stockData);
-								int index = str.indexOf("=");
-								String stockDataCode = null;
-								try{
-								    stockDataCode = stockData.substring(index-6,index);
-								}catch(Exception e){
-									continue;
-								}
-								stockData = stockData.substring(index+2, stockData.length()-2);
-								if (StringUtils.isEmpty(stockData) || StringUtils.isEmpty(stockData.trim())) {
-									continue;
-								}
-								insert(stockDataCode, stockData);
+		// String sysParam = DBTools.getString("select s_value from system_param
+		// where s_key='get_net_stock_data'");
+		// while ("1".equals(sysParam)) {
+		try {
+			List<String> stockCodeList = getStockCodeList();
+			Collections.shuffle(stockCodeList);
+			StringBuffer stockStringBuffer = new StringBuffer();
+			for (int i = 0; i < stockCodeList.size(); i++) {
+				stockCode = stockCodeList.get(i);
+
+				String fullStockCode = StockUtil.getFullStockCode(stockCode);
+				if (i % 100 == 0 || (i == stockCodeList.size() - 1)) {
+					stockStringBuffer.append(fullStockCode);
+					try {
+						String stockString = stockStringBuffer.toString();
+						stockStringBuffer = new StringBuffer();
+						String url = "http://hq.sinajs.cn/list=" + stockString;
+						String str = HttpUtil.getJsonContent(url);
+						// System.out.println(url);
+						String[] stockDataArr = str.split("\\n");
+						for (String stockData : stockDataArr) {
+							// System.out.println(stockData);
+							int index = str.indexOf("=");
+							String stockDataCode = null;
+							try {
+								stockDataCode = stockData.substring(index - 6, index);
+							} catch (Exception e) {
+								continue;
 							}
-							Thread.sleep(millis);
-						} catch (Exception e) {
-							e.printStackTrace();
+							stockData = stockData.substring(index + 2, stockData.length() - 2);
+							if (StringUtils.isEmpty(stockData) || StringUtils.isEmpty(stockData.trim())) {
+								continue;
+							}
+							insert(stockDataCode, stockData);
 						}
-						
-					} else {
-						stockStringBuffer.append(fullStockCode).append(",");
+						Thread.sleep(millis);
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
+
+				} else {
+					stockStringBuffer.append(fullStockCode).append(",");
 				}
-				Thread.sleep(150);// 10分钟一个轮回
-				//sysParam = DBTools.getString("select s_value from system_param where s_key='get_net_stock_data'");
-
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
+			Thread.sleep(150);// 10分钟一个轮回
+			// sysParam = DBTools.getString("select s_value from system_param
+			// where s_key='get_net_stock_data'");
 
-		//}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// }
 	}
 
-	private static void insert(String stockCode,String stockDataDetail){
-		try{
+	private static void insert(String stockCode, String stockDataDetail) {
+		try {
 			PreparedStatement pstmt = null;
-			//System.out.println(stockDataCode+"@"+str);
+			// System.out.println(stockDataCode+"@"+str);
 			String[] arrStr = stockDataDetail.split(",");
 			// int mai1 = Integer.parseInt(arrStr[10]) / 100;
 			String b = stockCode;
@@ -148,16 +160,15 @@ public class DataTools {
 			if ("Infinity".equals(e)) {
 				e = "-99.99";
 			}
-	
+
 			String sql = null;
-			if ("-99.99".equals(
-					DBTools.getString("select b from stock_data_query where b='" + b + "'"))) {
+			if ("-99.99".equals(DBTools.getString("select b from stock_data_query where b='" + b + "'"))) {
 				sql = " INSERT INTO stock_data_query (c,r,p,q,d,o,m,s,e,create_date,b) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 			} else {
 				sql = " update stock_data_query set c=?,r=?,p=?,q=?,d=?,o=?,m=?,s=?,e=?,create_date=? where b=?";
 			}
 			pstmt = DBTools.getConn().prepareStatement(sql);
-	
+
 			pstmt.setObject(1, c);
 			pstmt.setObject(2, r);
 			pstmt.setObject(3, p);
@@ -170,11 +181,11 @@ public class DataTools {
 			pstmt.setObject(10, arrStr[30] + " " + arrStr[31]);
 			pstmt.setObject(11, b);
 			pstmt.executeUpdate();
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static List<String> getHongSanBing() {
 		List<String> hongsanbingList = new ArrayList<String>();
 		List<String> strList = DataTools.getStockCodeList();
@@ -555,11 +566,17 @@ public class DataTools {
 	}
 
 	public static List<Report> getReportData() {
+		return getReportData(1);
+	}
+
+	public static List<Report> getReportData(int userId) {
+
+		
 		java.util.List<Report> reports = new ArrayList<Report>();
-		double benjin = getBenjin();
+		double benjin = getBenjin(userId);
 		try {
 
-			String query = "select * from blotter order by create_date asc";
+			String query = "select * from blotter where userId = "+userId+" order by create_date asc";
 
 			ResultSet rs = DBTools.getResult(query);
 
@@ -582,35 +599,48 @@ public class DataTools {
 					preReport = new Report();
 					preReport.setChenben(benjin);
 					preReport.setSzzs(initszzs);
+					report.setSzzsbili_t(0);
+					report.setSzzsbili(0);
+					
+					report.setFudongkuiyin_d(0);
+					report.setFudongkuiyinbili_d(0);
+					report.setFudongkuiyin_w(0);
+					report.setFudongkuiyinbili_w(0);
+					report.setFudongkuiyin_t(0);
+					report.setFudongkuiyinbili_t(0);
+					report.setFudongkuiyin_t(0);
+					report.setFudongkuiyinbili_t(0);
+					report.setFudongkuiyin_t(0);
+					report.setFudongkuiyinbili_t(0);
 				} else {
 					report.setBenjin(preReport.getChenben());
+					setSzzsbili_w(report);
+					report.setSzzsbili_t((szzs - initszzs) * 100 / initszzs);
+					report.setSzzsbili((szzs - preReport.getSzzs()) * 100 / preReport.getSzzs());
+					Calendar currCal = Calendar.getInstance();
+					int y = Integer.parseInt(report.getCreateDate().substring(0, 4));
+					int m = Integer.parseInt(report.getCreateDate().substring(5, 7));
+					int d = Integer.parseInt(report.getCreateDate().substring(8, 10));
+					currCal.set(y, m - 1, d);
+					currCal.setFirstDayOfWeek(Calendar.MONDAY);
+					int day = currCal.get(Calendar.DAY_OF_WEEK);
+					currCal.add(Calendar.DATE, currCal.getFirstDayOfWeek() - day);
 
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					String preDate = dateFormat.format(currCal.getTime());
+					if (preDate.equals(report.getCreateDate())) {
+						report.setMd(true);
+					}
+					
+					report.setFudongkuiyin_d(balance - preReport.getChenben());
+					report.setFudongkuiyinbili_d(report.getFudongkuiyin_d() * 100 / preReport.getChenben());
+					setFudongkuiyinbili_w(report);
+					setFudongkuiyinbili_m(report);
+					setFudongkuiyinbili_y(report);
+					setFudongkuiyinbili_t(report);
 				}
 
-				Calendar currCal = Calendar.getInstance();
-				int y = Integer.parseInt(report.getCreateDate().substring(0, 4));
-				int m = Integer.parseInt(report.getCreateDate().substring(5, 7));
-				int d = Integer.parseInt(report.getCreateDate().substring(8, 10));
-				currCal.set(y, m - 1, d);
-				currCal.setFirstDayOfWeek(Calendar.MONDAY);
-				int day = currCal.get(Calendar.DAY_OF_WEEK);
-				currCal.add(Calendar.DATE, currCal.getFirstDayOfWeek() - day);
-
-				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-				String preDate = dateFormat.format(currCal.getTime());
-				if (preDate.equals(report.getCreateDate())) {
-					report.setMd(true);
-				}
-
-				setSzzsbili_w(report);
-				report.setSzzsbili_t((szzs - initszzs) * 100 / initszzs);
-				report.setSzzsbili((szzs - preReport.getSzzs()) * 100 / preReport.getSzzs());
-				report.setFudongkuiyin_d(balance - preReport.getChenben());
-				report.setFudongkuiyinbili_d(report.getFudongkuiyin_d() * 100 / preReport.getChenben());
-				setFudongkuiyinbili_w(report);
-				setFudongkuiyinbili_m(report);
-				setFudongkuiyinbili_y(report);
-				setFudongkuiyinbili_t(report);
+				
 				reports.add(report);
 				preReport = report;
 			}
@@ -639,6 +669,7 @@ public class DataTools {
 			preSzzs = initszzs;
 		}
 		report.setSzzsbili_w((report.getSzzs() - preSzzs) * 100 / preSzzs);
+
 	}
 
 	public static void setFudongkuiyinbili_w(Report report) {

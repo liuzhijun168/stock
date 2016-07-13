@@ -10,7 +10,7 @@ public class App
 {
     public static void main( String[] args )
     {
-    	 DataTools.loadLastestData();
+    	 DataTools.loadLastestData(0);
         System.out.println( );
     }
 }

@@ -18,7 +18,7 @@ public class ScheduleTaskServiceImpl implements ScheduleTaskService {
 
 	public void execute() {
 		System.out.println("ScheduleTaskServiceImpl.execute()");
-		DataTools.loadLastestData();
+		DataTools.loadLastestData(0);
 	}
 	
 	

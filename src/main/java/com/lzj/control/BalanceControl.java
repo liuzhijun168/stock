@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lzj.bean.Balance;
+import com.lzj.bean.User;
 import com.lzj.dao.BalanceDao;
 import com.lzj.dao.BlotterDao;
 
@@ -18,9 +19,17 @@ public class BalanceControl {
 	@RequestMapping("/addBalance")
 	public String blotter(HttpServletRequest request, int changeType, float balance, String remark) {
 		
+		
+		User user = (User)request.getSession().getAttribute("user");
+		
+		if(user == null){
+			return "forward:/system/login";  
+		}
+		
 		BalanceDao balanceDao = new BalanceDao();
 		
 		Balance balanceObj = new Balance();
+		balanceObj.setUserId(user.getId());
 		balanceObj.setBalance(balance * changeType);
 		balanceObj.setRemark(remark);
 		balanceObj.setCreateDate(new Date());
@@ -29,7 +38,7 @@ public class BalanceControl {
 		BlotterDao blotterDao = new BlotterDao();
 		blotterDao.modifyBlotterBalance(balance * changeType);
 		
-		return "redirect:"+"/bootstrap/dangriyingkui.jsp";
+		return "forward:/bbtj/dangriyingkui";  
 	}
 	
 	@RequestMapping("/delBlotter")
@@ -39,7 +48,7 @@ public class BalanceControl {
 
 		blotterDao.delBlotter(blotterId );
 		
-		return "redirect:"+"/bootstrap/dangriyingkui.jsp";
+		return "forward:/bbtj/dangriyingkui";  
 	}
 	
 	

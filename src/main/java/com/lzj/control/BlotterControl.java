@@ -3,11 +3,13 @@ package com.lzj.control;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lzj.bean.Blotter;
+import com.lzj.bean.User;
 import com.lzj.dao.BlotterDao;
 
 @Controller
@@ -42,10 +44,19 @@ public class BlotterControl {
 	
 	@RequestMapping("/dangriyingkui")
 	public String dangriyingkuiList(HttpServletRequest request) {
-		
+
 		BlotterDao blotterDao = new BlotterDao();
 
-		return "/bootstrap/dangriyingkui";
+		HttpSession httpSession = request.getSession();
+		User user = (User) httpSession.getAttribute("user");
+		
+		if(user == null){
+			return "forward:/system/login";  
+		}
+		
+		int userId = user.getId();
+		
+		return "forward:/bbtj/dangriyingkui";  
 	}
 	
 	@RequestMapping("/dangriyingkui_chart")

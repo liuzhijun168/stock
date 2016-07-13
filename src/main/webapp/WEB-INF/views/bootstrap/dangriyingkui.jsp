@@ -1,3 +1,4 @@
+<%@page import="com.lzj.bean.User"%>
 <%@page import="com.lzj.eastmoney.http.StockInfoUtil"%>
 <%@page import="com.lzj.util.DateUtil"%>
 <%@page import="com.lzj.Report"%>
@@ -12,7 +13,14 @@
 <head>
 
 <%
-	List<Report> reports = DataTools.getReportData();
+	User user = (User)request.getSession().getAttribute("user");
+
+	Integer userId = 1;
+	if(user != null){
+		userId = user.getId();
+	}
+	
+	List<Report> reports = DataTools.getReportData(userId);
 %>
 
 <!-- start: Meta -->
@@ -157,8 +165,18 @@
 									<td><%=DataTools.setColor(2, report.getFudongkuiyinbili_y())%></td>
 									<td><%=DataTools.setColor(0, report.getFudongkuiyin_t())%></td>
 									<td><%=DataTools.setColor(0, report.getFudongkuiyin_t() / (reports.size() - indexInt + 1))%></td>
-									<td><button onclick="del(<%=report.getId()%>)"
+									<td>
+									<%
+									
+									if(user != null){
+										%>
+										<button onclick="del(<%=report.getId()%>)"
 											type="button" class="btn btn-primary">删除</button></td>
+										<% 
+									}
+									
+									%>
+									
 								</tr>
 								<%
 									}

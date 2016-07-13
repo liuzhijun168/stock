@@ -5,6 +5,7 @@ import java.util.Date;
 public class Balance {
 	
 	private int id;
+	private int userId;
 	private float balance;
 	private String remark;
 	private Date createDate;
@@ -32,12 +33,10 @@ public class Balance {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	
-	@Override
-	public String toString() {
-		return "Balance [id=" + id + ", balance=" + balance + ", remark=" + remark + ", createDate=" + createDate + "]";
+	public int getUserId() {
+		return userId;
 	}
-	
-	
-	
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 }

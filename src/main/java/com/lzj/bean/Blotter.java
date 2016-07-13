@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class Blotter {
 
+	private int id;
+	private int userId;
 	private float szzs;
 	private float balance;
 	private float balanceYy;
@@ -33,7 +35,17 @@ public class Blotter {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	
-	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 	
 }

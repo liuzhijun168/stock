@@ -35,10 +35,10 @@ public class ChartLineCmpServlet extends HttpServlet {
 			jsonArray
 					.append("{ \"elements\": [ ");
 			StringBuffer zichan = new StringBuffer();
-			zichan.append("{ \"type\": \"line\", \"values\": [");
+			zichan.append("{ \"type\": \"line\",\"text\":\"个人盈亏\", \"values\": [");
 			
 			StringBuffer dapan = new StringBuffer();
-			dapan.append("{ \"type\": \"line\", \"values\": [");
+			dapan.append("{ \"type\": \"line\",\"text\":\"大盘盈亏\", \"values\": [");
 			
 			List<Report> reports =  DataTools.getReportData();
 			boolean flag = true;
@@ -65,7 +65,7 @@ public class ChartLineCmpServlet extends HttpServlet {
 			dapan.append(" ], \"dot-style\": { \"type\": \"hollow-dot\", \"dot-size\": 4, \"halo-size\": 1, \"colour\": \"#C25030\" },\"colour\": \"#C25030\"}");
 			jsonArray.append(zichan);
 			jsonArray.append(","+dapan);
-			jsonArray.append("],\"title\": {\"text\": \"盈亏曲线\" },");
+			jsonArray.append("],\"title\": {\"text\": \"盈亏曲线比例(%)\" },");
 			jsonArray
 			.append("\"x_legend\": { \"text\": \"日期\", \"style\": \"{font-size: 12px; color: #778877}\" }, ");
 	jsonArray

@@ -2,30 +2,33 @@ package com.lzj.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.lzj.DBTools;
-import com.lzj.bean.Balance;
+import com.lzj.bean.User;
 
-public class BalanceDao {
+public class UserDao {
 
-	public void addBalance(Balance balance) {
+	public User getUser(String loginName,String password) {
 		Connection conn = DBTools.getConn();
 		PreparedStatement pstmt = null;
+		User user = null;
 		try {
 			conn = DBTools.getConn();
-			conn.setAutoCommit(false);
-			String sql = "insert balance(balance,userId,remark,create_date) values(?,?,?,?)";
+			String sql = "select * from user where loginName = ? and password = ?";
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setObject(1, balance.getBalance());
-			pstmt.setObject(2, balance.getUserId());
-			pstmt.setObject(3, balance.getRemark());
-			pstmt.setObject(4, balance.getCreateDate());
-			pstmt.executeUpdate();
-			conn.commit();
-
-			conn.setAutoCommit(true);
+			pstmt.setObject(1, loginName);
+			pstmt.setObject(2, password);
+			ResultSet resultSet = pstmt.executeQuery();
+			while(resultSet.next()){
+				user = new User();
+				user.setId(resultSet.getInt("id"));
+				user.setLoginName(resultSet.getString("loginName"));
+				user.setPassword(resultSet.getString("password"));
+				user.setNickname(resultSet.getString("nickname"));
+			}
 		} catch (SQLException ex) {
 			try {
 				// 提交失败，执行回滚操作
@@ -52,6 +55,7 @@ public class BalanceDao {
 				System.err.println("资源关闭失败!!!");
 			}
 		}
+		return user;
 	}
 
 	public void delBlotter(int blotterId) {
