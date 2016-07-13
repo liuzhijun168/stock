@@ -39,15 +39,15 @@
 				<ul>
 					<li><a href="/bbtj/dangriyingkui"><i class="icon-bar-chart"></i><span
 							class="hidden-tablet"> 当日盈亏</span></a></li>
-					<li><a href="/bootstrap/dangriyingkui_chart.jsp"><i class="icon-bar-chart"></i><span
+					<li><a href="/bbtj/dangriyingkui_chart"><i class="icon-bar-chart"></i><span
 					class="hidden-tablet"> 盈亏曲线</span></a></li>
-					<li><a href="/bootstrap/zongzichan_chart.jsp"><i class="icon-bar-chart"></i><span
+					<li><a href="/bbtj/zongzichan_chart"><i class="icon-bar-chart"></i><span
 					class="hidden-tablet"> 总资产</span></a></li>
-					<li><a href="/bootstrap/dangriyingkui_dapan_chart.jsp"><i class="icon-bar-chart"></i><span
+					<li><a href="/bbtj/dangriyingkui_dapan_chart"><i class="icon-bar-chart"></i><span
 					class="hidden-tablet"> 盈亏-大盘曲线</span></a></li>
 					<!-- <li><a href="/bootstrap/rishouru_chart.jsp"><i class="icon-bar-chart"></i><span
 					class="hidden-tablet"> 日收入曲线</span></a></li> -->
-					<li><a href="/bootstrap/rijunshouru_chart.jsp"><i class="icon-bar-chart"></i><span
+					<li><a href="/bbtj/rijunshouru_chart"><i class="icon-bar-chart"></i><span
 					class="hidden-tablet"> 日均收入曲线</span></a></li>
 				</ul></li>
 			<li><a class="dropmenu" href="#"><i class="icon-list-alt"></i><span

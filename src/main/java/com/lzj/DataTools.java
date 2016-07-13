@@ -85,7 +85,7 @@ public class DataTools {
 					stockCode = stockCodeList.get(i);
 
 					String fullStockCode = StockUtil.getFullStockCode(stockCode);
-					if (i % 599 == 0 || (i == stockCodeList.size() - 1)) {
+					if (i % 100 == 0 || (i == stockCodeList.size() - 1)) {
 						stockStringBuffer.append(fullStockCode);
 						try {
 							String stockString = stockStringBuffer.toString();
@@ -101,7 +101,6 @@ public class DataTools {
 								try{
 								    stockDataCode = stockData.substring(index-6,index);
 								}catch(Exception e){
-									System.out.println(url+"@"+stockData);
 									continue;
 								}
 								stockData = stockData.substring(index+2, stockData.length()-2);
@@ -110,14 +109,14 @@ public class DataTools {
 								}
 								insert(stockDataCode, stockData);
 							}
+							Thread.sleep(500);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-
+						
 					} else {
 						stockStringBuffer.append(fullStockCode).append(",");
 					}
-
 				}
 				Thread.sleep(150);// 10分钟一个轮回
 				//sysParam = DBTools.getString("select s_value from system_param where s_key='get_net_stock_data'");

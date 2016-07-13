@@ -27,7 +27,7 @@ public class BlotterControl {
 		blotter.setCreateDate(createDate);
 		blotterDao.addBlotter(blotter );
 		
-		return "redirect:"+"/bootstrap/dangriyingkui.jsp";
+		return "forward:/bbtj/dangriyingkui";  
 	}
 	
 	@RequestMapping("/delBlotter")
@@ -37,7 +37,7 @@ public class BlotterControl {
 
 		blotterDao.delBlotter(blotterId );
 		
-		return "redirect:"+"/bootstrap/dangriyingkui.jsp";
+		return "forward:/bbtj/dangriyingkui";  
 	}
 	
 	@RequestMapping("/dangriyingkui")
@@ -48,5 +48,36 @@ public class BlotterControl {
 		return "bootstrap/dangriyingkui";
 	}
 	
+	@RequestMapping("/dangriyingkui_chart")
+	public String dangriyingkuiChart(HttpServletRequest request) {
+		
+		BlotterDao blotterDao = new BlotterDao();
+
+		return "/bootstrap/dangriyingkui_chart";
+	}
 	
+
+	@RequestMapping("/zongzichan_chart")
+	public String zongzichanChart(HttpServletRequest request) {
+		
+		BlotterDao blotterDao = new BlotterDao();
+
+		return "/bootstrap/zongzichan_chart";
+	}
+	
+	@RequestMapping("/dangriyingkui_dapan_chart")
+	public String dangriyingkuiDapanChart(HttpServletRequest request) {
+		
+		BlotterDao blotterDao = new BlotterDao();
+
+		return "/bootstrap/dangriyingkui_dapan_chart";
+	}
+	
+	@RequestMapping("/rijunshouru_chart")
+	public String rijunshouruChart(HttpServletRequest request) {
+		
+		BlotterDao blotterDao = new BlotterDao();
+
+		return "/bootstrap/rijunshouru_chart";
+	}
 }

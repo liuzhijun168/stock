@@ -38,7 +38,7 @@ public class ChartLineDayServlet extends HttpServlet {
 			boolean flag = true;
 			int maxValue = 0;
 			int minValue = 0;
-			for (int i = 10; i < reports.size(); i++) {
+			for (int i = 0; i < reports.size(); i++) {
 				Report report = reports.get(i);
 				double value = report.getFudongkuiyin_t()/(i+1) ;
 				maxValue = Math.max(maxValue, (int)value);
