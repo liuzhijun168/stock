@@ -38,7 +38,7 @@ public class ZongZiChanServlet extends HttpServlet {
 			List<Report> reports =  DataTools.getReportData(user.getId());
 			boolean flag = true;
 			int maxValue = 0;
-			int minValue = 1000000;
+			int minValue = 0;
 			for (int i = 0; i < reports.size(); i++) {
 				Report report = reports.get(i);
 				int chenBen = (int) report.getChenben();

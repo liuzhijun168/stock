@@ -13,14 +13,9 @@
 <head>
 
 <%
-	User user = (User)request.getSession().getAttribute("user");
+	User user = (User) request.getSession().getAttribute("user");
 
-	Integer userId = 1;
-	if(user != null){
-		userId = user.getId();
-	}
-	
-	List<Report> reports = DataTools.getReportData(userId);
+	List<Report> reports = DataTools.getReportData(user.getId());
 %>
 
 <!-- start: Meta -->
@@ -37,10 +32,17 @@
 <!-- end: Mobile Specific -->
 
 <!-- start: CSS -->
-<link id="bootstrap-style" href="${pageContext.request.contextPath}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
-<link id="base-style" href="${pageContext.request.contextPath}/bootstrap/css/style.css" rel="stylesheet">
-<link id="base-style-responsive" href="${pageContext.request.contextPath}/bootstrap/css/style-responsive.css"
+<link id="bootstrap-style"
+	href="${pageContext.request.contextPath}/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/bootstrap/css/bootstrap-responsive.min.css"
+	rel="stylesheet">
+<link id="base-style"
+	href="${pageContext.request.contextPath}/bootstrap/css/style.css"
+	rel="stylesheet">
+<link id="base-style-responsive"
+	href="${pageContext.request.contextPath}/bootstrap/css/style-responsive.css"
 	rel="stylesheet">
 <!-- end: CSS -->
 
@@ -56,7 +58,8 @@
 	<![endif]-->
 
 <!-- start: Favicon -->
-<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico">
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/img/favicon.ico">
 <!-- end: Favicon -->
 
 </head>
@@ -101,8 +104,8 @@
 					<div class="box span12">
 						<div class="box-header" data-original-title>
 							<h2>
-								<i id="addData">添加数据</i><span class="break"></span>
-								<i id="addZiJinData">资金变更</i><span class="break"></span>
+								<i id="addData">添加数据</i><span class="break"></span> <i
+									id="addZiJinData">资金变更</i><span class="break"></span>
 							</h2>
 						</div>
 					</div>
@@ -166,19 +169,19 @@
 									<td><%=DataTools.setColor(0, report.getFudongkuiyin_t())%></td>
 									<td><%=DataTools.setColor(0, report.getFudongkuiyin_t() / (reports.size() - indexInt + 1))%></td>
 									<td>
-									<%
-									
-									if(user != null){
+										<%
+											if (user != null) {
 										%>
-										<button onclick="del(<%=report.getId()%>)"
-											type="button" class="btn btn-primary">删除</button>
-										<button onclick="editData(<%=report.getId()%>,<%=report.getSzzs()%>,<%=report.getShizhi()%>,<%=report.getChenben()%>,'<%=report.getCreateDate().replace("-", "/")%>')"
-											type="button" class="btn btn-primary">修改</button></td>
-										<% 
-									}
-									
+										<button onclick="del(<%=report.getId()%>)" type="button"
+											class="btn btn-primary">删除</button>
+										<button
+											onclick="editData(<%=report.getId()%>,<%=report.getSzzs()%>,<%=report.getShizhi()%>,<%=report.getChenben()%>,'<%=report.getCreateDate().replace("-", "/")%>')"
+											type="button" class="btn btn-primary">修改</button>
+									</td>
+									<%
+										}
 									%>
-									
+
 								</tr>
 								<%
 									}
@@ -255,33 +258,35 @@
 		<div class="modal-body">
 			<form class="form-horizontal" method="post"
 				action="${pageContext.request.contextPath}/bbtj/editBlotter">
-				 <input id="blotterId" name="blotterId" type="hidden" value="">
+				<input id="blotterId" name="blotterId" type="hidden" value="">
 				<fieldset>
 					<div class="control-group">
 						<label class="control-label" for="typeahead">上证指数 </label>
 						<div class="controls">
-							<input type="text" id="eszzs" class="span6 typeahead" name="szzs" value="" />
+							<input type="text" id="eszzs" class="span6 typeahead" name="szzs"
+								value="" />
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="typeahead">总资产 </label>
 						<div class="controls">
-							<input id="ebalance" type="text" class="span6 typeahead" name="balance"
-								value="" />
+							<input id="ebalance" type="text" class="span6 typeahead"
+								name="balance" value="" />
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="typeahead">市值 </label>
 						<div class="controls">
-							<input id="ebalanceYy" type="text" class="span6 typeahead" name="balanceYy"
-								value="" />
+							<input id="ebalanceYy" type="text" class="span6 typeahead"
+								name="balanceYy" value="" />
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="date01">日期</label>
 						<div class="controls">
-							<input id="ecreateDate" type="text" class="input-xlarge datepicker"
-								name="createDate" value="<%=DateUtil.formatDate("yyyy/MM/dd")%>">
+							<input id="ecreateDate" type="text"
+								class="input-xlarge datepicker" name="createDate"
+								value="<%=DateUtil.formatDate("yyyy/MM/dd")%>">
 						</div>
 					</div>
 					<div class="form-actions">
@@ -291,7 +296,7 @@
 			</form>
 		</div>
 	</div>
-	
+
 	<div class="modal hide fade" id="myZiJinModal">
 		<input id="curCode" type="hidden"> <input id="zoushiCyc"
 			type="hidden"> <input id="curIdx" type="hidden">
@@ -307,8 +312,8 @@
 						<label class="control-label" for="typeahead">变动类型 </label>
 						<div class="controls">
 							<select name="changeType">
-							  <option value="1">存入</option>
-							  <option value="-1">取出</option>
+								<option value="1">存入</option>
+								<option value="-1">取出</option>
 							</select>
 						</div>
 					</div>
@@ -322,8 +327,7 @@
 					<div class="control-group">
 						<label class="control-label" for="typeahead">备注 </label>
 						<div class="controls">
-							<input type="text" class="span6 typeahead" name="remark"
-								value="" />
+							<input type="text" class="span6 typeahead" name="remark" value="" />
 						</div>
 					</div>
 					<div class="form-actions">
@@ -381,7 +385,13 @@
 		});
 		
 		function del(blotterId){
-			 window.location.href="${pageContext.request.contextPath}/bbtj/delBlotter?blotterId="+blotterId; 
+			if(window.confirm('你确定要删除吗？')){
+                window.location.href="${pageContext.request.contextPath}/bbtj/delBlotter?blotterId="+blotterId; 
+                return true;
+             }else{
+                //alert("取消");
+                return false;
+            }
 		}
 		$('.datatable').dataTable({
 			"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
