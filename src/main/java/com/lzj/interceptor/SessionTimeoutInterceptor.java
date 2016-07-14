@@ -36,7 +36,7 @@ public class SessionTimeoutInterceptor  implements HandlerInterceptor{
             return true;  //返回true，则这个方面调用后会接着调用postHandle(),  afterCompletion()  
         }else{  
             // 未登录  跳转到登录页面  
-        	request.getRequestDispatcher("/system/login").forward(request, response);
+        	response.sendRedirect("/system/login");
         }
 		return false;  
     }  

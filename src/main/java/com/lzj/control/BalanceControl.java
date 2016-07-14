@@ -2,6 +2,7 @@ package com.lzj.control;
 
 import java.util.Date;
 
+import javax.json.Json;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import com.lzj.bean.Balance;
 import com.lzj.bean.User;
 import com.lzj.dao.BalanceDao;
 import com.lzj.dao.BlotterDao;
+import com.lzj.util.JsonUtil;
 
 @Controller
 @RequestMapping("/balance")
@@ -21,7 +23,6 @@ public class BalanceControl {
 		
 		
 		User user = (User)request.getSession().getAttribute("user");
-		
 		if(user == null){
 			return "forward:/system/login";  
 		}

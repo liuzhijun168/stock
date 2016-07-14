@@ -2,6 +2,7 @@ package com.lzj.control;
 
 import java.util.Date;
 
+import javax.json.Json;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.lzj.bean.Blotter;
 import com.lzj.bean.User;
 import com.lzj.dao.BlotterDao;
+import com.lzj.util.JsonUtil;
 
 @Controller
 @RequestMapping("/bbtj")
@@ -20,16 +22,19 @@ public class BlotterControl {
 	public String blotter(HttpServletRequest request, float szzs, float balance, float balanceYy,
 			Date createDate) {
 		
-		BlotterDao blotterDao = new BlotterDao();
+		User user = (User)request.getSession().getAttribute("user");
 		
+		BlotterDao blotterDao = new BlotterDao();
 		Blotter blotter = new Blotter();
+		blotter.setUserId(user.getId());
 		blotter.setSzzs(szzs);
 		blotter.setBalance(balance);
 		blotter.setBalanceYy(balanceYy);
 		blotter.setCreateDate(createDate);
 		blotterDao.addBlotter(blotter );
-		
-		return "forward:/bbtj/dangriyingkui";  
+		System.out.println(JsonUtil.toJosn(user ));
+		System.out.println(JsonUtil.toJosn(blotter ));
+		return "redirect:/bbtj/dangriyingkui";  
 	}
 	
 	@RequestMapping("/delBlotter")
@@ -39,7 +44,7 @@ public class BlotterControl {
 
 		blotterDao.delBlotter(blotterId );
 		
-		return "forward:/bbtj/dangriyingkui";  
+		return "redirect:/bbtj/dangriyingkui";  
 	}
 	
 	@RequestMapping("/dangriyingkui")
@@ -51,7 +56,7 @@ public class BlotterControl {
 		User user = (User) httpSession.getAttribute("user");
 		
 		if(user == null){
-			return "forward:/system/login";  
+			return "redirect:/system/login";  
 		}
 		
 		int userId = user.getId();

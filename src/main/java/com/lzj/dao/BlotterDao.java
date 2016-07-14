@@ -15,13 +15,14 @@ public class BlotterDao {
 		try {
 			conn = DBTools.getConn();
 			conn.setAutoCommit(false);
-			String sql = "insert blotter(szzs,balance,balance_yy,create_date) values(?,?,?,?)";
+			String sql = "insert blotter(szzs,balance,balance_yy,userId,create_date) values(?,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setObject(1, blotter.getSzzs());
 			pstmt.setObject(2, blotter.getBalance());
 			pstmt.setObject(3, blotter.getBalanceYy());
-			pstmt.setObject(4, blotter.getCreateDate());
+			pstmt.setObject(4, blotter.getUserId());
+			pstmt.setObject(5, blotter.getCreateDate());
 			pstmt.executeUpdate();
 			conn.commit();
 
