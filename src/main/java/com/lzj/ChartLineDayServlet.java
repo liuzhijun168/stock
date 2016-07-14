@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.lzj.bean.User;
+
 /**
  * Servlet implementation class ChartServlet
  */
@@ -30,11 +32,13 @@ public class ChartLineDayServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		try {
+			User user = (User)request.getSession().getAttribute("user");
+
 			//{ "elements": [ { "type": "line", "values": [ 1, 2, 1, null, null, null, null, null ] } ], "title": { "text": "Sat Mar 07 2015" } }
 			StringBuffer jsonArray = new StringBuffer();
 			jsonArray
 					.append("{ \"elements\": [ { \"type\": \"line\", \"values\": [");
-			List<Report> reports =  DataTools.getReportData();
+			List<Report> reports =  DataTools.getReportData(user.getId());
 			boolean flag = true;
 			int maxValue = 0;
 			int minValue = 0;

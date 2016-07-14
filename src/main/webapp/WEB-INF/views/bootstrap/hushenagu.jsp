@@ -8,7 +8,7 @@
 <head>
 
 <%
-	String sql = "select * from stock_data_query sdq left join stock_ticai_detail td on sdq.b = td.code and orderBy=1";// and g is not null";
+	String sql = "select * from stock_data_query sdq left join stock_ticai_detail td on sdq.b = td.code and orderBy=1 and e != -100";// and g is not null";
 	ResultSet resultSet = DBTools.getResult(sql);
 	
 %>

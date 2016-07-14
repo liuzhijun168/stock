@@ -64,10 +64,6 @@ public class DataTools {
 		return provinceCodeList;
 
 	}
-
-	public static double getBenjin() {
-		return getBenjin(1);
-	}
 	
 	public static double getInitszzs(int userId) {
 		return DBTools.getD("select szzs from blotter where userId="+userId+" order by create_date asc limit 1");
@@ -563,10 +559,6 @@ public class DataTools {
 		return chiGuDetail;
 	}
 
-	public static List<Report> getReportData() {
-		return getReportData(1);
-	}
-
 	public static List<Report> getReportData(int userId) {
 
 		
@@ -592,6 +584,7 @@ public class DataTools {
 				report.setSzzs(szzs);
 				report.setBenjin(benjin);
 				report.setChenben(balance);
+				report.setShizhi(balance_yy);
 				report.setCangwei(balance_yy * 100 / balance);
 
 				double initszzs = getInitszzs(userId);
@@ -684,14 +677,13 @@ public class DataTools {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		String preDate = dateFormat.format(currCal.getTime());
 
-		String sql = "select balance from blotter where create_date between '2000-01-01 00:00:00' and '" + preDate
-				+ " 00:00:00' order by create_date desc  limit 0,1";
+		String sql = "select balance from blotter where userId = "+report.getUserId()+" and (create_date between '2000-01-01 00:00:00' and '" + preDate
+				+ " 00:00:00') order by create_date desc  limit 0,1";
 
 		double preBalance = Double.parseDouble(DBTools.getString(sql));
 		if (-99.99 == preBalance) {
-			preBalance = getBenjin();
+			preBalance = getBenjin(report.getUserId());
 		}
-
 		report.setFudongkuiyin_w(report.getChenben() - preBalance);
 		report.setFudongkuiyinbili_w(report.getFudongkuiyin_w() * 100 / preBalance);
 	}
@@ -702,22 +694,22 @@ public class DataTools {
 		String d = report.getCreateDate().substring(8, 10);
 		// String y = report.getCreateDate();
 		if ("01".equals(m)) {
-			String last = "select balance from blotter where create_date between '" + y + "-" + m
-					+ "-01 00:00:00' and '" + y + "-" + m + "-" + d + " 23:59:59' order by create_date desc  limit 0,1";
-			double firstDbl = getBenjin();
+			String last = "select balance from blotter userId = "+report.getUserId()+" and ( where create_date between '" + y + "-" + m
+					+ "-01 00:00:00' and '" + y + "-" + m + "-" + d + " 23:59:59') order by create_date desc  limit 0,1";
+			double firstDbl = getBenjin(report.getUserId());
 			double lastDbl = Double.parseDouble(DBTools.getString(last));
 			report.setFudongkuiyin_m(lastDbl - firstDbl);
 			report.setFudongkuiyinbili_m(report.getFudongkuiyin_m() * 100 / firstDbl);
 		} else {
 			String pm = (Integer.parseInt(m) - 1) + "";
-			String first = "select balance from blotter where create_date between '" + y + "-" + pm
-					+ "-01 00:00:00' and '" + y + "-" + pm + "-31 23:59:59' order by create_date desc limit 0,1";
-			String last = "select balance from blotter where create_date between '" + y + "-" + m
-					+ "-01 00:00:00' and '" + y + "-" + m + "-" + d + " 23:59:59' order by create_date desc  limit 0,1";
+			String first = "select balance from blotter where userId = "+report.getUserId()+" and ( create_date between '" + y + "-" + pm
+					+ "-01 00:00:00' and '" + y + "-" + pm + "-31 23:59:59') order by create_date desc limit 0,1";
+			String last = "select balance from blotter where userId = "+report.getUserId()+" and ( create_date between '" + y + "-" + m
+					+ "-01 00:00:00' and '" + y + "-" + m + "-" + d + " 23:59:59') order by create_date desc  limit 0,1";
 			double preBalance = Double.parseDouble(DBTools.getString(first));
 			double lastDbl = Double.parseDouble(DBTools.getString(last));
 			if (preBalance == -99.99) {
-				preBalance = getBenjin();
+				preBalance = getBenjin(report.getUserId());
 			}
 			report.setFudongkuiyin_m(lastDbl - preBalance);
 			report.setFudongkuiyinbili_m(report.getFudongkuiyin_m() * 100 / preBalance);
@@ -733,15 +725,15 @@ public class DataTools {
 
 		double preBalance = Double.parseDouble(DBTools.getString(sql));
 		if (-99.99 == preBalance) {
-			preBalance = getBenjin();
+			preBalance = getBenjin(report.getUserId());
 		}
 		report.setFudongkuiyin_y(report.getChenben() - preBalance);
 		report.setFudongkuiyinbili_y(report.getFudongkuiyin_y() * 100 / preBalance);
 	}
 
 	public static void setFudongkuiyinbili_t(Report report) {
-		report.setFudongkuiyin_t(report.getChenben() - getBenjin());
-		report.setFudongkuiyinbili_t(report.getFudongkuiyin_t() * 100 / getBenjin());
+		report.setFudongkuiyin_t(report.getChenben() - getBenjin(report.getUserId()));
+		report.setFudongkuiyinbili_t(report.getFudongkuiyin_t() * 100 / getBenjin(report.getUserId()));
 	}
 
 	public static String setColor(int p, double num) {

@@ -56,6 +56,53 @@ public class BlotterDao {
 
 	}
 
+	public void editBlotter(Blotter blotter) {
+		Connection conn = DBTools.getConn();
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBTools.getConn();
+			conn.setAutoCommit(false);
+			String sql = "update blotter set szzs=?,balance=?,balance_yy=?,create_date=? where id=?";
+			pstmt = conn.prepareStatement(sql);
+System.out.println(blotter.getId());
+			pstmt.setObject(1, blotter.getSzzs());
+			pstmt.setObject(2, blotter.getBalance());
+			pstmt.setObject(3, blotter.getBalanceYy());
+			pstmt.setObject(4, blotter.getCreateDate());
+			pstmt.setObject(5, blotter.getId());
+			pstmt.executeUpdate();
+			conn.commit();
+
+			conn.setAutoCommit(true);
+		} catch (SQLException ex) {
+			try {
+				// 提交失败，执行回滚操作
+				conn.rollback();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.err.println("updateExistsInfo回滚执行失败!!!");
+			}
+			ex.printStackTrace();
+			System.err.println("updateExistsInfo执行失败");
+
+		} finally {
+			try {
+				// 关闭资源
+				if (pstmt != null)
+					pstmt.close();
+				/*
+				 * if (conn != null) conn.close();
+				 */
+				System.out.println("成功");
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.err.println("资源关闭失败!!!");
+			}
+		}
+
+	}
+	
 	public void delBlotter(int blotterId) {
 		Connection conn = DBTools.getConn();
 		PreparedStatement pstmt = null;

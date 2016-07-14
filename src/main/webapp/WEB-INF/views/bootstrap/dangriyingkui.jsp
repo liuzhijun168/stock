@@ -113,19 +113,19 @@
 							<thead>
 								<tr>
 									<th width="4%">序</th>
-									<th width="8%">日期</th>
-									<th width="7%">沪指</th>
-									<th width="6%">日幅%</th>
-									<th width="6%">周幅%</th>
-									<th width="6%">累积幅%</th>
+									<th width="6%">日期</th>
+									<th width="5%">沪指</th>
+									<th width="4%">日幅%</th>
+									<th width="4%">周幅%</th>
+									<th width="4%">累积幅%</th>
 									<th width="6%">市值</th>
-									<th width="6%">仓位%</th>
-									<th width="6%">日盈亏</th>
-									<th width="6%">日盈亏%</th>
+									<th width="4%">仓位%</th>
+									<th width="4%">日盈亏</th>
+									<th width="4%">日盈亏%</th>
 									<th width="6%">周盈亏</th>
-									<th width="6%">周盈亏%</th>
+									<th width="4%">周盈亏%</th>
 									<th width="6%">月盈亏</th>
-									<th width="8%">月盈亏%</th>
+									<th width="4%">月盈亏%</th>
 									<th width="8%">年盈亏</th>
 									<th width="8%">年盈亏%</th>
 									<th width="8%">总盈亏</th>
@@ -171,7 +171,9 @@
 									if(user != null){
 										%>
 										<button onclick="del(<%=report.getId()%>)"
-											type="button" class="btn btn-primary">删除</button></td>
+											type="button" class="btn btn-primary">删除</button>
+										<button onclick="editData(<%=report.getId()%>,<%=report.getSzzs()%>,<%=report.getShizhi()%>,<%=report.getChenben()%>,'<%=report.getCreateDate().replace("-", "/")%>')"
+											type="button" class="btn btn-primary">修改</button></td>
 										<% 
 									}
 									
@@ -216,14 +218,14 @@
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="typeahead">净资产 </label>
+						<label class="control-label" for="typeahead">总资产 </label>
 						<div class="controls">
 							<input type="text" class="span6 typeahead" name="balance"
 								value="" />
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="typeahead">总资产 </label>
+						<label class="control-label" for="typeahead">市值 </label>
 						<div class="controls">
 							<input type="text" class="span6 typeahead" name="balanceYy"
 								value="" />
@@ -243,6 +245,53 @@
 			</form>
 		</div>
 	</div>
+	<div class="modal hide fade" id="editModal">
+		<input id="curCode" type="hidden"> <input id="zoushiCyc"
+			type="hidden"> <input id="curIdx" type="hidden">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">×</button>
+			<h3>修改数据</h3>
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal" method="post"
+				action="${pageContext.request.contextPath}/bbtj/editBlotter">
+				 <input id="blotterId" name="blotterId" type="hidden" value="">
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="typeahead">上证指数 </label>
+						<div class="controls">
+							<input type="text" id="eszzs" class="span6 typeahead" name="szzs" value="" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="typeahead">总资产 </label>
+						<div class="controls">
+							<input id="ebalance" type="text" class="span6 typeahead" name="balance"
+								value="" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="typeahead">市值 </label>
+						<div class="controls">
+							<input id="ebalanceYy" type="text" class="span6 typeahead" name="balanceYy"
+								value="" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="date01">日期</label>
+						<div class="controls">
+							<input id="ecreateDate" type="text" class="input-xlarge datepicker"
+								name="createDate" value="<%=DateUtil.formatDate("yyyy/MM/dd")%>">
+						</div>
+					</div>
+					<div class="form-actions">
+						<button type="submit" class="btn btn-primary">确定修改</button>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+	
 	<div class="modal hide fade" id="myZiJinModal">
 		<input id="curCode" type="hidden"> <input id="zoushiCyc"
 			type="hidden"> <input id="curIdx" type="hidden">
@@ -308,6 +357,20 @@
                 }
             });;
 		});
+		function editData(blotterId,szzs,zzc,shizhi,createDate){
+			$('#blotterId').val(blotterId);
+			$('#eszzs').val(szzs);
+			$('#ebalance').val(shizhi);
+			$('#ebalanceYy').val(zzc);
+			$('#ecreateDate').val(createDate);
+			$('#editModal').modal('show').css({
+                width: 'auto',
+                'margin-left': function () {
+                    return -($(this).width() / 2);
+                }
+            });
+		}
+		
 		$('#addZiJinData').click(function(e) {
 			$('#myZiJinModal').modal('show').css({
                 width: 'auto',

@@ -19,7 +19,7 @@ import com.lzj.util.JsonUtil;
 public class BlotterControl {
 
 	@RequestMapping("/addBlotter")
-	public String blotter(HttpServletRequest request, float szzs, float balance, float balanceYy,
+	public String addBlotter(HttpServletRequest request, float szzs, float balance, float balanceYy,
 			Date createDate) {
 		
 		User user = (User)request.getSession().getAttribute("user");
@@ -32,6 +32,24 @@ public class BlotterControl {
 		blotter.setBalanceYy(balanceYy);
 		blotter.setCreateDate(createDate);
 		blotterDao.addBlotter(blotter );
+		return "redirect:/bbtj/dangriyingkui";  
+	}
+	
+	@RequestMapping("/editBlotter")
+	public String editBlotter(HttpServletRequest request,int blotterId, float szzs, float balance, float balanceYy,
+			Date createDate) {
+		
+		User user = (User)request.getSession().getAttribute("user");
+		
+		BlotterDao blotterDao = new BlotterDao();
+		Blotter blotter = new Blotter();
+		blotter.setId(blotterId);
+		blotter.setUserId(user.getId());
+		blotter.setSzzs(szzs);
+		blotter.setBalance(balance);
+		blotter.setBalanceYy(balanceYy);
+		blotter.setCreateDate(createDate);
+		blotterDao.editBlotter(blotter );
 		return "redirect:/bbtj/dangriyingkui";  
 	}
 	
