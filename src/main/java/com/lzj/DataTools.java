@@ -27,7 +27,6 @@ import com.lzj.util.StockUtil;
 public class DataTools {
 
 	//private static double initszzs = 2925.23;;
-	private static double initszzs = 3060.69;
 
 	public static void main(String[] args) {
 		// getJinZhenTanDi();
@@ -70,14 +69,13 @@ public class DataTools {
 		return getBenjin(1);
 	}
 	
+	public static double getInitszzs(int userId) {
+		return DBTools.getD("select szzs from blotter where userId="+userId+" order by create_date asc limit 1");
+	}
+	
+	
 	public static double getBenjin(int userId) {
-		double benjin = 0;
-		if(userId == 2 ){
-			benjin = 42353.86;
-		}else{
-			benjin = Double.parseDouble(DBTools.getString("select sum(balance) from balance "));
-		}
-		return benjin;
+		return DBTools.getD("select balance from blotter where userId="+userId+" order by create_date asc limit 1");
 	}
 
 	public static void loadLastestData(long millis) {
@@ -583,6 +581,7 @@ public class DataTools {
 			Report preReport = null;
 			while (rs.next()) {
 				Report report = new Report();
+				report.setUserId(userId);
 				int id = rs.getInt("id");
 				double szzs = rs.getDouble("szzs");
 				double balance = rs.getDouble("balance");
@@ -595,10 +594,11 @@ public class DataTools {
 				report.setChenben(balance);
 				report.setCangwei(balance_yy * 100 / balance);
 
+				double initszzs = getInitszzs(userId);
 				if (preReport == null) {
 					preReport = new Report();
 					preReport.setChenben(benjin);
-					preReport.setSzzs(initszzs);
+					preReport.setSzzs(initszzs );
 					report.setSzzsbili_t(0);
 					report.setSzzsbili(0);
 					
@@ -666,7 +666,7 @@ public class DataTools {
 				+ " 00:00:00' order by create_date desc  limit 0,1";
 		double preSzzs = Double.parseDouble(DBTools.getString(sql));
 		if (-99.99 == preSzzs) {
-			preSzzs = initszzs;
+			preSzzs = getInitszzs(report.getUserId());
 		}
 		report.setSzzsbili_w((report.getSzzs() - preSzzs) * 100 / preSzzs);
 

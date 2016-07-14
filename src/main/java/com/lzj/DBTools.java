@@ -76,6 +76,10 @@ public class DBTools {
 		return "-99.99";
 	}
 	
+	public static Double getD(String sql) {
+		return Double.parseDouble(getString(sql));
+	}
+	
 	public static java.util.Date getDate(String sql) {
 		try {
 			ResultSet resultSet = DBTools.getStatement().executeQuery(sql);

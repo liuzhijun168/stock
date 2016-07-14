@@ -7,6 +7,7 @@ public class Report {
 	private DecimalFormat decimalFormat1 = new DecimalFormat("0.00");
 	
 	private int id;
+	private int userId;
 	private String createDate;
 	private double szzs;
 	private double szzsbili;
@@ -155,5 +156,13 @@ public class Report {
 	public void setCangwei(double cangwei) {
 		this.cangwei = cangwei;
 	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	
+	
 	
 }

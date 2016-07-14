@@ -144,4 +144,8 @@ public class BlotterDao {
 		}
 		
 	}
+	
+	public void getFirstData(int userId){
+		String query = "select * from blotter where userId = "+userId+" order by create_date asc";
+	}
 }

@@ -32,8 +32,6 @@ public class BlotterControl {
 		blotter.setBalanceYy(balanceYy);
 		blotter.setCreateDate(createDate);
 		blotterDao.addBlotter(blotter );
-		System.out.println(JsonUtil.toJosn(user ));
-		System.out.println(JsonUtil.toJosn(blotter ));
 		return "redirect:/bbtj/dangriyingkui";  
 	}
 	
