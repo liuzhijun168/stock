@@ -37,14 +37,15 @@ public class ChartLineServlet extends HttpServlet {
 			request.getRequestDispatcher("/login").forward(request, response);
 		}
 */
-		int userId = 1;
+		User user = (User)request.getSession().getAttribute("user");
+
 		try {
 			// { "elements": [ { "type": "line", "values": [ 1, 2, 1, null,
 			// null, null, null, null ] } ], "title": { "text": "Sat Mar 07
 			// 2015" } }
 			StringBuffer jsonArray = new StringBuffer();
 			jsonArray.append("{ \"elements\": [ { \"type\": \"line\", \"values\": [");
-			List<Report> reports = DataTools.getReportData(userId);
+			List<Report> reports = DataTools.getReportData(user.getId());
 			boolean flag = true;
 			int maxValue = 0;
 			int minValue = 0;
