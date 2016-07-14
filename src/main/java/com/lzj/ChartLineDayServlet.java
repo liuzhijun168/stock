@@ -62,7 +62,7 @@ public class ChartLineDayServlet extends HttpServlet {
 			jsonArray
 			.append("\"x_legend\": { \"text\": \"日期\", \"style\": \"{font-size: 12px; color: #778877}\" }, ");
 	jsonArray
-			.append("\"y_axis\": { \"min\": -"+minValue+", \"max\": "+maxValue+", \"steps\": 50 } }");
+			.append("\"y_axis\": { \"min\": -"+minValue+", \"max\": "+maxValue+", \"steps\": "+(maxValue/10)+" } }");
 			response.setContentType("application/json;charset=UTF-8");
 			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
