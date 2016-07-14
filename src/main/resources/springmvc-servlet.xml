@@ -74,6 +74,7 @@
 					<list>
 						<!-- 如果请求中包含以下路径，则不进行拦截 -->
 						<value>/system/doLogin</value>
+						<value>/system/login</value>
 						<value>/js</value>
 						<value>/css</value>
 						<value>/image</value>

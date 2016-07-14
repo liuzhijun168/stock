@@ -56,14 +56,14 @@ public class BlotterControl {
 		
 		int userId = user.getId();
 		
-		return "forward:/bbtj/dangriyingkui";  
+		return "/bootstrap/dangriyingkui";  
 	}
 	
 	@RequestMapping("/dangriyingkui_chart")
 	public String dangriyingkuiChart(HttpServletRequest request) {
 		
 		BlotterDao blotterDao = new BlotterDao();
-
+	
 		return "/bootstrap/dangriyingkui_chart";
 	}
 	
