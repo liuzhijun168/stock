@@ -145,7 +145,7 @@
 			<ul class="dropdown-menu">
 				<li class="dropdown-menu-title"><span>Account Settings</span></li>
 				<li><a href="#"><i class="halflings-icon user"></i> Profile</a></li>
-				<li><a href="${pageContext.request.contextPath}/system/login"><i class="halflings-icon off"></i>
+				<li><a href="${pageContext.request.contextPath}/system/logout"><i class="halflings-icon off"></i>
 						退出</a></li>
 			</ul></li>
 		<!-- end: User Dropdown -->

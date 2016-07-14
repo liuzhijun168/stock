@@ -13,11 +13,17 @@ import com.lzj.dao.UserDao;
 public class SystemControl {
 
 	@RequestMapping(value = "/login")
-	public String index(HttpServletRequest request) {
+	public String login(HttpServletRequest request) {
 		request.getSession().removeAttribute("user");
 		return "/login";
 	}
 
+	@RequestMapping(value = "/logout")
+	public String logout(HttpServletRequest request) {
+		request.getSession().removeAttribute("user");
+		return "/login";
+	}
+	
 	@RequestMapping(value = "/doLogin")
 	public String doLogin(HttpServletRequest request,String loginName,String password) {
 		System.out.println(loginName+"    "+password);
