@@ -184,4 +184,14 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/classes/applicationContext.xml </param-value>
 	</context-param>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/system/login</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>500</error-code>
+		<location>/system/login</location>
+	</error-page>
 </web-app>

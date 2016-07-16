@@ -55,7 +55,7 @@ public class ZongZiChanServlet extends HttpServlet {
 			/*if(minValue > 0){
 				minValue = 0;
 			}*/
-			jsonArray.append(" ], \"dot-style\": { \"type\": \"hollow-dot\", \"dot-size\": 4, \"halo-size\": 1, \"colour\": \"#3D5C56\" } } ], \"title\": {\"text\": \"盈亏曲线\" },");
+			jsonArray.append(" ], \"dot-style\": { \"type\": \"hollow-dot\", \"dot-size\": 4, \"halo-size\": 1, \"colour\": \"#3D5C56\" } } ], \"title\": {\"text\": \"总金额盈亏曲线\" },");
 			jsonArray
 			.append("\"x_legend\": { \"text\": \"日期\", \"style\": \"{font-size: 12px; color: #778877}\" }, ");
 	jsonArray

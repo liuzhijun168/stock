@@ -51,8 +51,8 @@ public class ChartLineServlet extends HttpServlet {
 			int minValue = 0;
 			for (int i = 0; i < reports.size(); i++) {
 				Report report = reports.get(i);
-				maxValue = Math.max(maxValue, Math.abs((int) report.getFudongkuiyin_y()));
-				minValue = Math.min(maxValue, Math.abs((int) report.getFudongkuiyin_y()));
+				maxValue = Math.max(maxValue, (int) report.getFudongkuiyin_y());
+				minValue = Math.min(minValue, (int) report.getFudongkuiyin_y());
 				if (flag) {
 					jsonArray.append(report.getFudongkuiyin_y() + "");
 					flag = false;
@@ -61,14 +61,20 @@ public class ChartLineServlet extends HttpServlet {
 				}
 			}
 
-			if (minValue > 0) {
+			/*if (minValue > 0) {
+				minValue = 0;
+			}*/
+			int steps = (maxValue - minValue) / 10;
+			if(steps == 0){
 				minValue = 0;
 			}
-			int steps = (maxValue - minValue) / 10;
+			if(minValue > 0){
+				minValue = 0;
+			}
 			jsonArray.append(
 					" ], \"dot-style\": { \"type\": \"hollow-dot\", \"dot-size\": 4, \"halo-size\": 1, \"colour\": \"#3D5C56\" } } ], \"title\": {\"text\": \"盈亏曲线\" },");
 			jsonArray.append("\"x_legend\": { \"text\": \"日期\", \"style\": \"{font-size: 12px; color: #778877}\" }, ");
-			jsonArray.append("\"y_axis\": { \"min\": -" + minValue + ", \"max\": " + maxValue + ", \"steps\": " + steps
+			jsonArray.append("\"y_axis\": { \"min\": " + minValue + ", \"max\": " + maxValue + ", \"steps\": " + steps
 					+ " } }");
 			response.setContentType("application/json;charset=UTF-8");
 			response.setCharacterEncoding("UTF-8");

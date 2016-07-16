@@ -118,22 +118,23 @@
 									<th width="4%">序</th>
 									<th width="6%">日期</th>
 									<th width="5%">沪指</th>
-									<th width="4%">日幅%</th>
-									<th width="4%">周幅%</th>
-									<th width="4%">累积幅%</th>
-									<th width="6%">市值</th>
-									<th width="4%">仓位%</th>
-									<th width="4%">日盈亏</th>
-									<th width="4%">日盈亏%</th>
-									<th width="6%">周盈亏</th>
-									<th width="4%">周盈亏%</th>
-									<th width="6%">月盈亏</th>
-									<th width="4%">月盈亏%</th>
-									<th width="8%">年盈亏</th>
-									<th width="8%">年盈亏%</th>
-									<th width="8%">总盈亏</th>
-									<th width="8%">日均盈亏</th>
-									<th width="8%">操作</th>
+									<th width="5%">沪日%</th>
+									<th width="5%">沪周%</th>
+									<th width="5%">沪总%</th>
+									<th width="6%">总额</th>
+									<th width="5%">仓位%</th>
+									<th width="4%" title="日盈亏">日</th>
+									<th width="4%" title="日盈亏比例">日%</th>
+									<th width="4%" title="周盈亏">周</th>
+									<th width="4%" title="周盈亏比例">周%</th>
+									<th width="4%" title="月盈亏">月</th>
+									<th width="4%" title="月盈亏比例">月%</th>
+									<th width="5%" title="年盈亏">年</th>
+									<th width="4%" title="年盈亏比例">年%</th>
+									<th width="5%" title="总盈亏">总盈亏</th> 
+									<th width="4%" title="总盈亏比例">总%</th>
+									<th width="4%" title="日均盈亏">日均</th>
+									<th width="16%">操作</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -166,7 +167,8 @@
 									<td><%=DataTools.setColor(2, report.getFudongkuiyinbili_m())%></td>
 									<td><%=DataTools.setColor(0, report.getFudongkuiyin_y())%></td>
 									<td><%=DataTools.setColor(2, report.getFudongkuiyinbili_y())%></td>
-									<td><%=DataTools.setColor(0, report.getFudongkuiyin_t())%></td>
+									<td><%=DataTools.setColor(0, report.getFudongkuiyin_t())%></td> 
+									<td><%=DataTools.setColor(0, report.getFudongkuiyinbili_t())%></td> 
 									<td><%=DataTools.setColor(0, report.getFudongkuiyin_t() / (reports.size() - indexInt + 1))%></td>
 									<td>
 										<%

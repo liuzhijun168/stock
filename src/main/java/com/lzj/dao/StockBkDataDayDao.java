@@ -14,6 +14,7 @@ import org.apache.commons.collections.CollectionUtils;
 import com.lzj.DBTools;
 import com.lzj.bean.Blotter;
 import com.lzj.bean.StockBkDataDay;
+import com.lzj.bean.StockDataDay;
 import com.lzj.util.DateUtil;
 
 public class StockBkDataDayDao {
@@ -308,7 +309,7 @@ public class StockBkDataDayDao {
 	}
 
 	public Date getLastModifyDate() {
-		return DBTools.getDate("select create_date from stock_data_day order by create_date desc limit 1");
+		return DBTools.getDate("select create_date from stock_bk_data_day order by create_date desc limit 1");
 	}
 
 
@@ -370,5 +371,65 @@ public class StockBkDataDayDao {
 			}
 		}
 		return stockBkCodeList;
+	}
+	
+	public void addStockBkDataDay(StockDataDay stockDataDay) {
+		Connection conn = DBTools.getConn();
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBTools.getConn();
+			conn.setAutoCommit(false);
+			String sql = "INSERT INTO `stock_bk_data_day`(b,c,r,p,q,d,o,m,s,e,m5,m10,m20,m30,m60,m120,m250,create_date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			pstmt = conn.prepareStatement(sql);
+			stockDataDay.getD();
+			pstmt.setObject(1, stockDataDay.getB());
+			pstmt.setObject(2, stockDataDay.getC());
+			pstmt.setObject(3, stockDataDay.getR());
+			pstmt.setObject(4, stockDataDay.getP());
+			pstmt.setObject(5, stockDataDay.getQ());
+			pstmt.setObject(6, stockDataDay.getD());
+			pstmt.setObject(7, stockDataDay.getO());
+			pstmt.setObject(8, stockDataDay.getM());
+			pstmt.setObject(9, stockDataDay.getS());
+			pstmt.setObject(10, stockDataDay.getE());
+			pstmt.setObject(11, stockDataDay.getM5());
+			pstmt.setObject(12, stockDataDay.getM10());
+			pstmt.setObject(13, stockDataDay.getM20());
+			pstmt.setObject(14, stockDataDay.getM30());
+			pstmt.setObject(15, stockDataDay.getM60());
+			pstmt.setObject(16, stockDataDay.getM120());
+			pstmt.setObject(17, stockDataDay.getM250());
+			pstmt.setObject(18, stockDataDay.getCreateDate());
+			pstmt.executeUpdate();
+			conn.commit();
+
+			conn.setAutoCommit(true);
+		} catch (SQLException ex) {
+			try {
+				// 提交失败，执行回滚操作
+				conn.rollback();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.err.println("updateExistsInfo回滚执行失败!!!");
+			}
+			ex.printStackTrace();
+			System.err.println("updateExistsInfo执行失败");
+
+		} finally {
+			try {
+				// 关闭资源
+				if (pstmt != null)
+					pstmt.close();
+				/*
+				 * if (conn != null) conn.close();
+				 */
+				System.out.println("成功");
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.err.println("资源关闭失败!!!");
+			}
+		}
+
 	}
 }

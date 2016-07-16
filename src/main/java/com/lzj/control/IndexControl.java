@@ -11,7 +11,7 @@ public class IndexControl {
 
 	@RequestMapping(value = "")
 	public String index(HttpServletRequest request) {
-		return "/bootstrap/dangriyingkui";
+		return "/bbtj/dangriyingkui";
 	}
 
 }

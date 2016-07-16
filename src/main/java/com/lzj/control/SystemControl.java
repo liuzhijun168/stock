@@ -14,7 +14,6 @@ public class SystemControl {
 
 	@RequestMapping(value = "/login")
 	public String login(HttpServletRequest request) {
-		request.getSession().removeAttribute("user");
 		return "/login";
 	}
 
@@ -41,7 +40,7 @@ public class SystemControl {
 		
 		if(user != null){
 			request.getSession().setAttribute("user", user);
-			return "/bootstrap/dangriyingkui";
+			return "redirect:/bbtj/dangriyingkui";
 		}else{
 			return "/login";
 		}

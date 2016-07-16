@@ -5,8 +5,8 @@
 <div id="sidebar-left" class="span2">
 	<div class="nav-collapse sidebar-nav">
 		<ul class="nav nav-tabs nav-stacked main-menu">
-			<li><a href="home.jsp"><i class="icon-bar-chart"></i><span
-					class="hidden-tablet"> 看板监控</span></a></li>
+			<!-- <li><a href="home.jsp"><i class="icon-bar-chart"></i><span
+					class="hidden-tablet"> 看板监控</span></a></li> -->
 			<li><a class="dropmenu" href="#"><i class="icon-list-alt"></i><span
 					class="hidden-tablet"> 辅助归类</span><span
 					class="label label-important"> 5 </span></a>
@@ -87,7 +87,7 @@
 							class="icon-file-alt"></i><span class="hidden-tablet">
 								BBI*</span></a></li> -->
 				</ul></li>
-			<li><a class="dropmenu" href="#"><i class="icon-list-alt"></i><span
+			<!-- <li><a class="dropmenu" href="#"><i class="icon-list-alt"></i><span
 					class="hidden-tablet"> 行业资金出入</span><span
 					class="label label-important"> 4 </span></a>
 				<ul>
@@ -184,7 +184,7 @@
 			<li><a href="zhangdiefufenbu.jsp"><i class="icon-bar-chart"></i><span
 					class="hidden-tablet"> 系统配置</span></a></li>
 			<li><a href="/bootstrap/chart.html"><i class="icon-list-alt"></i><span
-					class="hidden-tablet"> Charts</span></a></li>
+					class="hidden-tablet"> Charts</span></a></li> -->
 		</ul>
 	</div>
 </div>

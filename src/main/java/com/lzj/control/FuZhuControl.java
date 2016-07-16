@@ -152,6 +152,42 @@ public class FuZhuControl {
 		return "/bootstrap/zhangdiefufenbu";
 	}
 	
+	
+	@RequestMapping("/reloadBkStockData")
+	public String reloadBkStockData(HttpServletRequest request) throws Exception {
+		StockBkDataDayDao stockBkDataDayDao = new StockBkDataDayDao();
+		String filePath = this.getClass().getResource("/mybktbl.txt").getPath().toString();
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+				new FileInputStream(filePath), "UTF-8"));
+		String line = "";
+		
+		while ((line = br.readLine()) != null) {
+			String[] datas = line.split("	");
+			StockBkDataDay stockBkDataDay = new StockBkDataDay();
+			stockBkDataDay.setB(datas[1]);
+			stockBkDataDay.setC(datas[2]);
+			stockBkDataDay.setD(Double.parseDouble(datas[3]));
+			stockBkDataDay.setE(Double.parseDouble(datas[4]));
+			stockBkDataDay.setR(Double.parseDouble(datas[5]));
+			stockBkDataDay.setP(Double.parseDouble(datas[6]));
+			stockBkDataDay.setQ(Double.parseDouble(datas[7]));
+			stockBkDataDay.setS(Double.parseDouble(datas[8]));
+			stockBkDataDay.setO(Double.parseDouble(datas[9]));
+			stockBkDataDay.setM(Double.parseDouble(datas[10]));
+			stockBkDataDay.setM5(Double.parseDouble(datas[11]));
+			stockBkDataDay.setM10(Double.parseDouble(datas[12]));
+			stockBkDataDay.setM20(Double.parseDouble(datas[13]));
+			stockBkDataDay.setM30(Double.parseDouble(datas[14]));
+			stockBkDataDay.setM60(Double.parseDouble(datas[15]));
+			stockBkDataDay.setM120(Double.parseDouble(datas[16]));
+			stockBkDataDay.setM250(Double.parseDouble(datas[17]));
+			stockBkDataDay.setCreateDate(DateUtil.str2Date(datas[18],"yyyy-MM-dd"));
+			stockBkDataDayDao.addStockBkDataDay(stockBkDataDay );
+		}
+		br.close();
+		return "/bootstrap/zhangdiefufenbu";
+	}
+	
 	@RequestMapping(value = "/bkduibi_line_data", produces = "text/html;charset=UTF-8")
 	@ResponseBody
 	public String bkBiJiaoLineData(HttpServletRequest request, String bkType) {
