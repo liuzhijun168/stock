@@ -147,17 +147,18 @@ System.out.println(blotter.getId());
 		
 	}
 
-	public void modifyBlotterBalance(float balance) {
+	public void modifyBlotterBalance(int userId,float balance) {
 		Connection conn = DBTools.getConn();
 		PreparedStatement pstmt = null;
 		try {
 			conn = DBTools.getConn();
 			conn.setAutoCommit(false);
-			String sql = "update blotter set balance = balance + ?,balance_yy = balance_yy + ?";
+			String sql = "update blotter set balance = balance + ?,balance_yy = balance_yy + ? where userId = ?";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setObject(1, balance);
 			pstmt.setObject(2, balance);
+			pstmt.setObject(3, userId);
 			pstmt.executeUpdate();
 			
 			conn.commit();
