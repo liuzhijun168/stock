@@ -39,7 +39,7 @@ public class BalanceControl {
 		BlotterDao blotterDao = new BlotterDao();
 		blotterDao.modifyBlotterBalance(user.getId(), balance * changeType);
 		
-		return "forward:/bbtj/dangriyingkui";  
+		return "redirect:/bbtj/dangriyingkui";  
 	}
 	
 	@RequestMapping("/delBlotter")
