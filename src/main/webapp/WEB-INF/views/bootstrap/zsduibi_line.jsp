@@ -85,12 +85,6 @@
 
 				<div class="row-fluid">
 					<div class="box span12">
-						<a class="btn btn-primary preImg" onclick="changgeBkType('8802')">地区板块</a> 
-						<a class="btn btn-primary preImg" onclick="changgeBkType('8803')"> 行业板块1</a>
-						<a class="btn btn-primary preImg" onclick="changgeBkType('8804')"> 行业板块2</a>
-						<a class="btn btn-primary preImg" onclick="changgeBkType('8805')"> 概念板块1</a>
-						<a class="btn btn-primary preImg" onclick="changgeBkType('8809')"> 概念板块2</a>
-						<a class="btn btn-primary preImg" onclick="changgeBkType('8808')"> 风格板块</a>
 						<a class="btn btn-primary preImg" onclick="changgeBkType('8888')"> 指数板块</a>
 					</div>
 					<div id="my_chart"></div>
@@ -142,11 +136,11 @@
 		swfobject.embedSWF(
 		  "${pageContext.request.contextPath}/charts/open-flash-chart.swf", "my_chart", "1100", "480",
 		  "9.0.0", "expressInstall.swf",
-		  {"data-file":"${pageContext.request.contextPath}/fz/bkduibi_line_data?bkType=${bkType}","loading":"数据加载中..."}
+		  {"data-file":"${pageContext.request.contextPath}/fz/zsduibi_line_data?bkType=${bkType}","loading":"数据加载中..."}
 		 // {"data-file":"/stock/charts/data.txt","loading":"数据加载中..."}
 		  );
 		function changgeBkType(bkType){
-			 window.location.href="${pageContext.request.contextPath}/fz/bkduibi_line?bkType="+bkType; 
+			 window.location.href="${pageContext.request.contextPath}/fz/zsduibi_line?bkType="+bkType; 
 		}
 		</script>
 		

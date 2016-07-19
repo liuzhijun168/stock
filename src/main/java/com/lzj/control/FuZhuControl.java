@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lzj.bean.StockBkDataDay;
 import com.lzj.bean.StockDataDay;
+import com.lzj.bean.StockZsDataDay;
 import com.lzj.dao.StockBkDataDayDao;
 import com.lzj.dao.StockDataDayDao;
+import com.lzj.dao.StockZsDataDayDao;
 import com.lzj.util.ColorUtil;
 import com.lzj.util.DateUtil;
 
@@ -115,6 +117,19 @@ public class FuZhuControl {
 	public String bkBiJiaoLine(HttpServletRequest request, String bkType) {
 		request.setAttribute("bkType", bkType);
 		return "/bootstrap/bkduibi_line";
+	}
+	
+	/**
+	 * 指数板块曲线比较
+	 * 
+	 * @param request
+	 * @param queryDate
+	 * @return
+	 */
+	@RequestMapping("/zsduibi_line")
+	public String zsBiJiaoLine(HttpServletRequest request, String bkType) {
+		request.setAttribute("bkType", bkType);
+		return "/bootstrap/zsduibi_line";
 	}
 	
 	@RequestMapping("/reloadStockData")
@@ -278,6 +293,95 @@ public class FuZhuControl {
 		}
 		return jsonArray.toString();
 	}
+	
+	@RequestMapping(value = "/zsduibi_line_data", produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String zsBiJiaoLineData(HttpServletRequest request, String bkType) {
+		StockZsDataDayDao stockZsDataDayDao = new StockZsDataDayDao();
+		Map<String,String> codeAndType = new HashMap<String,String>();
+		
+		codeAndType.put("8888", "指数板块");
+		
+		List<String> bkCodeList = stockZsDataDayDao.getZsCodeList();
+		Date createDate = new Date();
+		createDate = DateUtil.addDay(createDate, -60);
+
+		Map<String, List<StockZsDataDay>> stockZsDataDayMap = new HashMap<String, List<StockZsDataDay>>();
+		for (String bkCode : bkCodeList) {
+			stockZsDataDayMap.put(bkCode, stockZsDataDayDao.getLineByZsCode(createDate, bkCode));
+		}
+
+		StringBuffer jsonArray = new StringBuffer();
+		try {
+			// { "elements": [ { "type": "line", "values": [ 1, 2, 1, null,
+			// null, null, null, null ] } ], "title": { "text": "Sat Mar 07
+			// 2015" } }
+
+			jsonArray.append("{ \"elements\": [ ");
+
+			int maxValue = 0;
+			int minValue = 0;
+
+			int maxCount = 0;
+
+			for (String bkCode : stockZsDataDayMap.keySet()) {
+				List<StockZsDataDay> zsDataDays = stockZsDataDayMap.get(bkCode);
+				maxCount = Math.max(maxCount, zsDataDays.size());
+			}
+
+			int count = 0;
+			for (String bkCode : stockZsDataDayMap.keySet()) {
+				String colour = ColorUtil.getRandColorCode();
+				count++;
+				List<StockZsDataDay> zsDataDays = stockZsDataDayMap.get(bkCode);
+				int offsetCount = maxCount - zsDataDays.size();
+				for (int i = 0; i < offsetCount; i++) {
+					StockZsDataDay zsDataDay = new StockZsDataDay();
+					zsDataDay.setE(0);
+					zsDataDays.add(0, zsDataDay);
+				}
+				double totalE = 0;
+				String nameText = zsDataDays.get(zsDataDays.size() - 1).getC();
+				jsonArray.append("{ \"type\": \"line\",\"text\":\"" + nameText + "\", \"values\": [");
+				for (int i = 0; i < zsDataDays.size(); i++) {
+
+					StockZsDataDay bkDataDay = zsDataDays.get(i);
+					double e = bkDataDay.getE();
+					if (e == -99.99) {
+						e = 0;
+					}
+					totalE = totalE + e;
+					maxValue = Math.max(maxValue, (int) totalE);
+					minValue = Math.min(minValue, (int) totalE);
+					if (i == (zsDataDays.size() - 1)) {
+						//jsonArray.append(String.format("%.2f",totalE));
+						jsonArray.append("{\"value\":"+String.format("%.2f",totalE)+",\"tip\":\""+nameText+"#val#\"}");
+						//{"value":7, "colour":"#FF0000", "tip":"LINE<br>#val#", "dot-size":12, "halo-size": 3 }
+					} else {
+						jsonArray.append("{\"value\":"+String.format("%.2f",totalE)+",\"tip\":\""+nameText+"#val#\"}").append(",");
+						//jsonArray.append(String.format("%.2f",totalE)).append(",");
+					}
+				}
+
+				jsonArray
+						.append(" ], \"dot-style\": { \"type\": \"hollow-dot\", \"dot-size\": 4, \"halo-size\": 1, \"colour\": \"#"
+								+ colour + "\" },\"colour\": \"#" + colour + "\"}");
+				if (count != (stockZsDataDayMap.size())) {
+					jsonArray.append(",");
+				}
+			}
+
+			jsonArray.append("]");
+			jsonArray.append(",\"title\": {\"text\": \""+codeAndType.get(bkType)+"\" },");
+			jsonArray.append("\"x_legend\": { \"text\": \"日期\", \"style\": \"{font-size: 12px; color: #778877}\" }, ");
+			jsonArray.append(
+					"\"y_axis\": { \"min\": " + (minValue - 2) + ", \"max\": " + (maxValue + 2) + ", \"steps\": 5 } }");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return jsonArray.toString();
+	}
+	
 public static void main(String[] args) {
 	System.out.println(String.format("%.2f", 0.1212125454d));
 	 DecimalFormat df = new DecimalFormat("#.00");  

@@ -108,7 +108,7 @@ html,body {
 					<div class="col-xs-12  ">
 						<div class="input-group">
 							<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-							&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="loginName" name="loginName" class="form-control" placeholder="用户名"/>
+							&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" value="${loginName }" id="loginName" name="loginName" class="form-control" placeholder="用户名"/>
 						</div>
 					</div>
 				</div>
@@ -116,7 +116,7 @@ html,body {
 					<div class="col-xs-12  ">
 						<div class="input-group">
 							<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-							&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" id="password" name="password" class="form-control" placeholder="密码"/>
+							&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" id="password" name="password" class="form-control" placeholder="密码"/><font color="red">${errormsg }</font>
 						</div>
 					</div>
 				</div>

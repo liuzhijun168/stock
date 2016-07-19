@@ -38,10 +38,13 @@ public class SystemControl {
 		
 		User user = userDao.getUser(loginName, password);
 		
+		
 		if(user != null){
 			request.getSession().setAttribute("user", user);
 			return "redirect:/bbtj/dangriyingkui";
 		}else{
+			request.setAttribute("loginName", loginName);
+			request.setAttribute("errormsg", "用户名不存在或密码错误");
 			return "/login";
 		}
 	}

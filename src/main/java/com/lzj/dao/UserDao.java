@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import com.lzj.DBTools;
 import com.lzj.bean.User;
 
+
 public class UserDao {
 
 	public User getUser(String loginName,String password) {

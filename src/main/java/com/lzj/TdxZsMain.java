@@ -12,15 +12,14 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import com.lzj.dao.StockBkDataDayDao;
-import com.lzj.dao.StockDataDayDao;
+import com.lzj.dao.StockZsDataDayDao;
 import com.lzj.util.DateUtil;
 
-public class TdxBkMain {
+public class TdxZsMain {
 	public static void main(String[] args) throws IOException {
 
-		StockBkDataDayDao stockBkDataDayDao = new StockBkDataDayDao();
-		Date lastModifyDate = DateUtil.getDateEnd(stockBkDataDayDao.getLastModifyDate());
+		StockZsDataDayDao stockZsDataDayDao = new StockZsDataDayDao();
+		Date lastModifyDate = DateUtil.getDateEnd(stockZsDataDayDao.getLastModifyDate());
 		if(lastModifyDate == null){
 			lastModifyDate = DateUtil.str2Date("1979-01-01", "yyyy-MM-dd");
 		}
@@ -31,7 +30,7 @@ public class TdxBkMain {
 			conn = DBTools.getConn();
 			conn.setAutoCommit(false);
 
-			File dirFile = new File("D:/tools/new_tdx/T0002/export/bk");
+			File dirFile = new File("D:/tools/new_tdx/T0002/export/zs");
 			File[] files = dirFile.listFiles();
 
 			File tempFile = null;
@@ -44,7 +43,7 @@ public class TdxBkMain {
 				String code = tempFile.getName().substring(2, 8);
 				String name = br.readLine().split(" ")[1];
 				System.out.println(name);
-				String sql = "INSERT INTO `stock_bk_data_day`(b,c,r,p,q,d,o,m,s,e,m5,m10,m20,m30,m60,m120,m250,create_date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				String sql = "INSERT INTO `stock_zs_data_day`(b,c,r,p,q,d,o,m,s,e,m5,m10,m20,m30,m60,m120,m250,create_date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 				pstmt = conn.prepareStatement(sql);
 				float zuoshou = 0;
 				Queue<Float> queue5 = new LinkedList<Float>();
@@ -59,6 +58,7 @@ public class TdxBkMain {
 						String[] dataArr = line.split(",");
 						String createDate = dataArr[0];
 						Date createDateTime = DateUtil.str2Date(createDate, "yyyy-MM-dd");
+						System.out.println(createDateTime+"  " +lastModifyDate  );
 						if(createDateTime.after(lastModifyDate)){
 							// b代码
 							String b = code;

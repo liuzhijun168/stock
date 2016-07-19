@@ -5,16 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
 
 import com.lzj.DBTools;
 import com.lzj.bean.Blotter;
 import com.lzj.bean.StockBkDataDay;
-import com.lzj.bean.StockDataDay;
 import com.lzj.util.DateUtil;
 
 public class StockBkDataDayDao {
@@ -373,7 +369,7 @@ public class StockBkDataDayDao {
 		return stockBkCodeList;
 	}
 	
-	public void addStockBkDataDay(StockDataDay stockDataDay) {
+	public void addStockBkDataDay(StockBkDataDay stockBkDataDay) {
 		Connection conn = DBTools.getConn();
 		PreparedStatement pstmt = null;
 		try {
@@ -381,25 +377,25 @@ public class StockBkDataDayDao {
 			conn.setAutoCommit(false);
 			String sql = "INSERT INTO `stock_bk_data_day`(b,c,r,p,q,d,o,m,s,e,m5,m10,m20,m30,m60,m120,m250,create_date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
-			stockDataDay.getD();
-			pstmt.setObject(1, stockDataDay.getB());
-			pstmt.setObject(2, stockDataDay.getC());
-			pstmt.setObject(3, stockDataDay.getR());
-			pstmt.setObject(4, stockDataDay.getP());
-			pstmt.setObject(5, stockDataDay.getQ());
-			pstmt.setObject(6, stockDataDay.getD());
-			pstmt.setObject(7, stockDataDay.getO());
-			pstmt.setObject(8, stockDataDay.getM());
-			pstmt.setObject(9, stockDataDay.getS());
-			pstmt.setObject(10, stockDataDay.getE());
-			pstmt.setObject(11, stockDataDay.getM5());
-			pstmt.setObject(12, stockDataDay.getM10());
-			pstmt.setObject(13, stockDataDay.getM20());
-			pstmt.setObject(14, stockDataDay.getM30());
-			pstmt.setObject(15, stockDataDay.getM60());
-			pstmt.setObject(16, stockDataDay.getM120());
-			pstmt.setObject(17, stockDataDay.getM250());
-			pstmt.setObject(18, stockDataDay.getCreateDate());
+			stockBkDataDay.getD();
+			pstmt.setObject(1, stockBkDataDay.getB());
+			pstmt.setObject(2, stockBkDataDay.getC());
+			pstmt.setObject(3, stockBkDataDay.getR());
+			pstmt.setObject(4, stockBkDataDay.getP());
+			pstmt.setObject(5, stockBkDataDay.getQ());
+			pstmt.setObject(6, stockBkDataDay.getD());
+			pstmt.setObject(7, stockBkDataDay.getO());
+			pstmt.setObject(8, stockBkDataDay.getM());
+			pstmt.setObject(9, stockBkDataDay.getS());
+			pstmt.setObject(10, stockBkDataDay.getE());
+			pstmt.setObject(11, stockBkDataDay.getM5());
+			pstmt.setObject(12, stockBkDataDay.getM10());
+			pstmt.setObject(13, stockBkDataDay.getM20());
+			pstmt.setObject(14, stockBkDataDay.getM30());
+			pstmt.setObject(15, stockBkDataDay.getM60());
+			pstmt.setObject(16, stockBkDataDay.getM120());
+			pstmt.setObject(17, stockBkDataDay.getM250());
+			pstmt.setObject(18, stockBkDataDay.getCreateDate());
 			pstmt.executeUpdate();
 			conn.commit();
 

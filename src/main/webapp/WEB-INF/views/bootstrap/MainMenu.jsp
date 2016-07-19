@@ -18,7 +18,9 @@
 					<li><a href="/fz/hushenbk_lishi?queryDate=<%=DateUtil.formatDate(new Date(), "yyyy-MM-dd")%>"><i class="icon-bar-chart"></i><span
 							class="hidden-tablet"> 沪深版块历史</span></a></li>		
 					<li><a href="/fz/bkduibi_line?bkType=8809"><i class="icon-bar-chart"></i><span
-							class="hidden-tablet"> 沪深版块对比</span></a></li>	
+							class="hidden-tablet"> 概念版块对比</span></a></li>	
+					<li><a href="/fz/zsduibi_line?bkType=8888"><i class="icon-bar-chart"></i><span
+							class="hidden-tablet"> 指数版块对比</span></a></li>
 					<!-- <li><a href="/bootstrap/geguliandong.jsp"><i class="icon-bar-chart"></i><span
 							class="hidden-tablet"> 个股联动</span></a></li>
 					<li><a href="/bootstrap/gegugainian.jsp"><i class="icon-bar-chart"></i><span

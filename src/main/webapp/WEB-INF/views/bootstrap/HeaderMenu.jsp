@@ -98,14 +98,14 @@
 						messages</span> <a href="#refresh"><i class="icon-repeat"></i></a></li>
 				<li><a href="#"> <span class="avatar"><img
 							src="img/avatar.jpg" alt="Avatar"></span> <span class="header">
-							<span class="from"> 刘志军  </span> <span class="time">
+							<span class="from"> 哈哈  </span> <span class="time">
 								6 min </span>
 					</span> <span class="message"> Lorem ipsum dolor sit amet
 							consectetur adipiscing elit, et al commore </span>
 				</a></li>
 				<li><a href="#"> <span class="avatar"><img
 							src="img/avatar.jpg" alt="Avatar"></span> <span class="header">
-							<span class="from"> 刘志军  </span> <span class="time">
+							<span class="from"> 哈哈  </span> <span class="time">
 								56 min </span>
 					</span> <span class="message"> Lorem ipsum dolor sit amet
 							consectetur adipiscing elit, et al commore </span>

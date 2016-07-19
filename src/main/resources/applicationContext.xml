@@ -18,8 +18,8 @@
 	<!-- <bean id="serializeManager" class="cn.sdk.serialization.KryoUtil"></bean> -->
 	<context:annotation-config />
 	<context:component-scan base-package="com.lzj" />
-
-	<!-- <context:property-placeholder location="classpath:config.properties"
+	<aop:aspectj-autoproxy />
+	<!-- <context:property-placeholder location="classpath:config.properties" 
 		ignore-unresolvable="true" /> -->
 	<!-- 要调用的工作类 -->
 	<!-- <bean id="quartzJob" class="cn.gps.service.impl.IGpsTaskServiceImpl"></bean> -->
@@ -42,16 +42,16 @@
 		</property>
 		<!-- cron表达式 -->
 		<property name="cronExpression">
-			<value>0 30/1 9-12 ? * MON-FRI</value>   
+			<value>0 30/1 9-12 ? * MON-FRI</value>
 		</property>
-	</bean> 
+	</bean>
 	<bean id="pmTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail">
 			<ref bean="jobTask" />
 		</property>
 		<!-- cron表达式 -->
 		<property name="cronExpression">
-			<value>0 0/1 13-15 ? * MON-FRI</value>   
+			<value>0 0/1 13-15 ? * MON-FRI</value>
 		</property>
 	</bean>
 	<!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序 -->
@@ -64,4 +64,6 @@
 			</list>
 		</property>
 	</bean>
+
+	<import resource="classpath*:/spring-mybatis.xml" />
 </beans>

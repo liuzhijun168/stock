@@ -59,7 +59,7 @@ public class ZongZiChanServlet extends HttpServlet {
 			jsonArray
 			.append("\"x_legend\": { \"text\": \"日期\", \"style\": \"{font-size: 12px; color: #778877}\" }, ");
 	jsonArray
-			.append("\"y_axis\": { \"min\": "+(minValue-1000)+", \"max\": "+(maxValue+1000)+", \"steps\": 10000 } }");
+			.append("\"y_axis\": { \"min\": "+(minValue)+", \"max\": "+(maxValue+1000)+", \"steps\": 10000 } }");
 			response.setContentType("application/json;charset=UTF-8");
 			response.setCharacterEncoding("UTF-8");
 			PrintWriter out = response.getWriter();
