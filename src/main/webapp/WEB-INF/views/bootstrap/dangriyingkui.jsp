@@ -157,7 +157,7 @@
 									<td><%=DataTools.setColor(2, report.getSzzsbili())%></td>
 									<td><%=DataTools.setColor(2, report.getSzzsbili_w())%></td>
 									<td><%=DataTools.setColor(2, report.getSzzsbili_t())%></td>
-									<td><%=DataTools.setColor(0, report.getChenben())%></td>
+									<td title="<%=report.getShizhi()%>"><%=DataTools.setColor(0, report.getChenben())%></td>
 									<td><%=DataTools.setColor(0, report.getCangwei())%></td>
 									<td><%=DataTools.setColor(0, report.getFudongkuiyin_d())%></td>
 									<td><%=DataTools.setColor(2, report.getFudongkuiyinbili_d())%></td>
@@ -168,7 +168,7 @@
 									<td><%=DataTools.setColor(0, report.getFudongkuiyin_y())%></td>
 									<td><%=DataTools.setColor(2, report.getFudongkuiyinbili_y())%></td>
 									<td><%=DataTools.setColor(0, report.getFudongkuiyin_t())%></td> 
-									<td><%=DataTools.setColor(0, report.getFudongkuiyinbili_t())%></td> 
+									<td><%=DataTools.setColor(2, report.getFudongkuiyinbili_t())%></td> 
 									<td><%=DataTools.setColor(0, report.getFudongkuiyin_t() / (reports.size() - indexInt + 1))%></td>
 									<td>
 										<%
