@@ -42,7 +42,6 @@
 		</property>
 		<!-- cron表达式 -->
 		<property name="cronExpression">
-			<value>0 30/1 9-12 ? * MON-FRI</value>
 			<value>0 30/5 9-12 ? * MON-FRI</value>   
 		</property>
 	</bean>
